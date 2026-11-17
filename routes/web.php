@@ -1,7 +1,29 @@
 <?php
+use Illuminate\Support\Facades\File;
 
-use Illuminate\Support\Facades\Route;
+/*
+|--------------------------------------------------------------------------
+| Modular Web Routes Loader
+|--------------------------------------------------------------------------
+|
+| File ini bertugas memuat seluruh web routes dari setiap module
+| yang berada di direktori app/Modules/*.
+| Setiap module dapat mendefinisikan route-nya sendiri.
+|
+*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+$modulesPath = base_path('app/Modules');
+
+if (! File::isDirectory($modulesPath)) {
+    return;
+}
+
+$moduleDirectories = File::directories($modulesPath);
+
+foreach ($moduleDirectories as $modulePath) {
+    $routesFile = $modulePath . '/Config/Routes.php';
+
+    if (File::exists($routesFile)) {
+        require $routesFile;
+    }
+}
