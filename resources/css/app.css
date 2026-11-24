@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@config '../../tailwind.config.js';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -6,4 +7,243 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+    :where(a, button, input):focus-visible {
+        @apply outline-2 outline-offset-4 outline-terracotta;
+    }
+
+    main:focus {
+        outline: none;
+    }
+}
+
+@layer components {
+    .skip-link {
+        @apply fixed start-4 top-4 z-10 -translate-y-24 rounded-sm bg-ink px-4 py-3 font-semibold text-soft;
+    }
+
+    .skip-link:focus {
+        @apply translate-y-0;
+    }
+
+    .brand-lockup {
+        @apply inline-flex min-h-11 w-fit items-center gap-3 text-lg font-semibold tracking-[0.12em] text-soft;
+    }
+
+    .brand-mark {
+        @apply relative size-9 rounded-sm border border-peach;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+        @apply absolute top-1/2 h-0.5 w-4 -translate-y-1/2 bg-peach;
+        content: '';
+    }
+
+    .brand-mark::before {
+        @apply start-1.5 -rotate-45;
+    }
+
+    .brand-mark::after {
+        @apply end-1.5 rotate-45;
+    }
+
+    .login-layout {
+        @apply min-h-dvh lg:grid lg:grid-cols-[2fr_3fr];
+    }
+
+    .login-brand-panel,
+    .workspace-sidebar {
+        @apply bg-terracotta text-soft;
+    }
+
+    .login-brand-panel {
+        @apply relative isolate flex flex-col gap-8 overflow-hidden px-6 py-5 sm:px-10 lg:min-h-dvh lg:p-10;
+    }
+
+    .login-brand-panel::before {
+        @apply pointer-events-none absolute inset-0 -z-10 text-peach/15;
+        content: '';
+        background-image: radial-gradient(currentColor 1px, transparent 1px);
+        background-size: 22px 22px;
+        mask-image: linear-gradient(140deg, transparent 12%, black);
+    }
+
+    .table-plan {
+        @apply relative m-auto hidden aspect-square w-full max-w-86 place-items-center lg:grid;
+    }
+
+    .table-plan::before,
+    .table-plan::after {
+        @apply absolute inset-0 rounded-full border border-peach/40;
+        content: '';
+    }
+
+    .table-plan::after {
+        @apply inset-10 border-dashed;
+    }
+
+    .table-plan-center {
+        @apply relative grid aspect-[5/4] w-[43%] place-items-center rounded-[46%] border-2 border-peach/75 bg-clay/35;
+    }
+
+    .table-plan-center::before,
+    .table-plan-center::after {
+        @apply absolute left-1/2 h-5 w-11 -translate-x-1/2 rounded-full border border-peach/70 bg-terracotta;
+        content: '';
+    }
+
+    .table-plan-center::before {
+        @apply -top-8;
+    }
+
+    .table-plan-center::after {
+        @apply -bottom-8;
+    }
+
+    .login-main {
+        @apply grid content-center px-5 py-10 sm:px-10 sm:py-14 lg:py-12;
+    }
+
+    .login-content {
+        @apply mx-auto w-full max-w-md rounded-2xl border border-line bg-soft p-6 sm:p-10;
+    }
+
+    .back-link {
+        @apply mb-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-terracotta underline-offset-4 hover:underline;
+    }
+
+    .page-title {
+        @apply text-3xl font-semibold leading-tight tracking-tight text-terracotta sm:text-4xl;
+    }
+
+    .intro-text {
+        @apply mt-2 wrap-anywhere text-base text-muted;
+    }
+
+    .field-label {
+        @apply mb-2 block text-sm font-semibold;
+    }
+
+    .form-input {
+        @apply block min-h-12 w-full rounded-md border border-muted/60 bg-soft px-3 py-2 text-ink;
+    }
+
+    .form-input[aria-invalid='true'] {
+        @apply border-danger;
+    }
+
+    .form-error {
+        @apply mt-2 text-sm font-medium text-danger;
+    }
+
+    .button {
+        @apply inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-md border border-transparent px-4 py-2.5 text-sm font-semibold;
+    }
+
+    .button--primary {
+        @apply bg-clay text-ink hover:bg-terracotta hover:text-soft;
+    }
+
+    .button--secondary {
+        @apply border-line bg-soft text-terracotta hover:bg-cream;
+    }
+
+    .button--sidebar {
+        @apply justify-start border-peach/35 text-soft hover:bg-soft/10;
+    }
+
+    .button--sidebar:focus-visible,
+    .brand-lockup:focus-visible,
+    .workspace-nav-link:focus-visible {
+        @apply outline-peach;
+    }
+
+    .button:active {
+        @apply translate-y-px;
+    }
+
+    .workspace {
+        @apply min-h-dvh md:grid md:grid-cols-[13.5rem_minmax(0,1fr)] lg:grid-cols-[16rem_minmax(0,1fr)];
+    }
+
+    .workspace-sidebar {
+        @apply grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-4 sm:px-7 md:flex md:flex-col md:items-stretch md:gap-6 md:px-5 md:py-7;
+    }
+
+    .workspace-sidebar .brand-lockup {
+        @apply col-span-2;
+    }
+
+    .workspace-sidebar nav {
+        @apply md:mt-4;
+    }
+
+    .workspace-sidebar form {
+        @apply md:mt-auto;
+    }
+
+    .workspace-sidebar .button {
+        @apply md:w-full;
+    }
+
+    .workspace-nav-link {
+        @apply flex min-h-11 items-center gap-3 rounded-md bg-peach px-3 py-2 text-sm font-semibold text-ink;
+    }
+
+    .dashboard-icon {
+        @apply size-3.5 rounded-xs border-2 border-current;
+        background: linear-gradient(currentColor, currentColor) center 3px / 100% 2px no-repeat;
+    }
+
+    .workspace-content {
+        @apply mx-auto w-full max-w-5xl px-5 py-7 sm:px-8 md:py-10 lg:px-12 lg:py-12;
+    }
+
+    .workspace-heading {
+        @apply mb-6 border-b border-muted/30 pb-5 sm:mb-8;
+    }
+
+    .surface-card {
+        @apply rounded-xl border border-line bg-soft p-5 sm:p-7;
+    }
+
+    .account-card {
+        @apply max-w-2xl;
+    }
+
+    .status-badge {
+        @apply inline-flex items-center rounded-full bg-cream px-3 py-1 text-sm font-semibold text-ink;
+    }
+
+    .status-badge--success {
+        @apply bg-success/15 text-ink;
+    }
+
+    .confirmation-modal {
+        @apply m-auto w-[calc(100%-2rem)] max-w-md rounded-xl border border-line bg-soft p-5 text-ink shadow-xl sm:p-7;
+    }
+
+    .confirmation-modal::backdrop {
+        @apply bg-ink/55;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .button {
+        transition: transform 140ms cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .confirmation-modal[open] {
+        animation: dialog-enter 170ms cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    @keyframes dialog-enter {
+        from {
+            opacity: 0;
+            transform: translateY(0.4rem);
+        }
+    }
 }

@@ -3,23 +3,27 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Modules\Rooms\Models\Room;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        if (! app()->environment(['local', 'testing'])) {
+            return;
+        }
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        foreach (['organizer' => 'Organizer Demo', 'peserta' => 'Peserta Demo'] as $account => $name) {
+            User::firstOrCreate(['email' => $account.'@rapatin.test'], [
+                'name' => $name,
+                'password' => config('auth.demo_password') ?: Str::random(32),
+            ]);
+        }
+
+        foreach (['Ruang Diskusi' => 12, 'Ruang Seminar' => 40] as $name => $capacity) {
+            Room::firstOrCreate(['location' => 'Gedung Demo', 'name' => $name], ['capacity' => $capacity]);
+        }
     }
 }

@@ -1,0 +1,8 @@
+name = "backend"
+description = "Laravel, MySQL, business rules and routine feature tests"
+model = "gpt-6.2-sol"
+model_reasoning_effort = "medium"
+developer_instructions = """
+Follow AGENTS.md and the focused assignment. Never delegate or advance phases.
+Write the assigned acceptance tests first. Implement migrations, models, Form Requests, policies, services and controllers as needed. Verify data integrity, authorization and existing callers. Run affected backend tests.
+"""

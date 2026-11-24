@@ -98,8 +98,8 @@
 </nav>
 <!-- Right CTAs -->
 <div class="flex items-center gap-4">
-<a class="text-[14px] font-semibold text-slate-700 hover:text-slate-900 px-2 py-1.5 transition-colors" data-path="sign-in" href="#">Sign In</a>
-<a class="inline-flex items-center justify-center px-4 py-2 text-[14px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm shadow-blue-600/30 transition-all hover:shadow" data-path="get-started" href="#">
+<a class="text-[14px] font-semibold text-slate-700 hover:text-slate-900 px-2 py-1.5 transition-colors" data-path="sign-in" href="{{ route(auth()->check() ? 'dashboard' : 'login') }}">Sign In</a>
+<a class="inline-flex items-center justify-center px-4 py-2 text-[14px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm shadow-blue-600/30 transition-all hover:shadow" data-path="get-started" href="{{ route(auth()->check() ? 'dashboard' : 'login') }}">
           Get Started
         </a>
 </div>
@@ -135,7 +135,7 @@
         </p>
 <!-- Centered Dual CTAs -->
 <div class="flex flex-wrap items-center justify-center gap-3.5 mb-7 w-full sm:w-auto">
-<a class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[15px] shadow-lg shadow-blue-600/25 transition-all group" data-path="get-started" href="#">
+<a class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[15px] shadow-lg shadow-blue-600/25 transition-all group" data-path="get-started" href="{{ route(auth()->check() ? 'dashboard' : 'login') }}">
 <span>Get Started</span>
 <span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
 </a>
@@ -863,11 +863,11 @@
             </p>
 <!-- Buttons -->
 <div class="flex flex-wrap items-center justify-center gap-3.5 w-full sm:w-auto mb-6">
-<a class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[15px] shadow-lg shadow-blue-600/30 transition-all" data-path="get-started" href="#">
+<a class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[15px] shadow-lg shadow-blue-600/30 transition-all" data-path="get-started" href="{{ route(auth()->check() ? 'dashboard' : 'login') }}">
 <span>Get Started</span>
 <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
 </a>
-<a class="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/20 font-semibold text-[15px] transition-colors" data-path="sign-in" href="#">
+<a class="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/20 font-semibold text-[15px] transition-colors" data-path="sign-in" href="{{ route(auth()->check() ? 'dashboard' : 'login') }}">
 <span>Sign In</span>
 </a>
 </div>

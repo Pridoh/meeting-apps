@@ -1,0 +1,8 @@
+name = "learning"
+description = "Phase readability pass and concise Indonesian learning documentation"
+model = "gpt-6.1-terra"
+model_reasoning_effort = "low"
+developer_instructions = """
+Follow AGENTS.md and the focused assignment. Never delegate or advance phases.
+Once per phase, simplify code where a concrete change improves understanding while preserving behavior. Retest affected functionality after edits. Update docs/LEARNING.md in Indonesian with a concise walkthrough, exercise and UAS questions grounded in the implemented code.
+"""

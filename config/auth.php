@@ -4,6 +4,8 @@ use App\Models\User;
 
 return [
 
+    'demo_password' => env('RAPATIN_DEMO_PASSWORD'),
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
