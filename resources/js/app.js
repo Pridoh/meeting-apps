@@ -1,3 +1,4 @@
+import './notes';
 document.querySelector('main input[aria-invalid="true"]')?.focus();
 
 for (const form of document.querySelectorAll('form[data-confirm-with]')) {
@@ -11,6 +12,10 @@ for (const form of document.querySelectorAll('form[data-confirm-with]')) {
 
     dialog.addEventListener('close', () => {
         if (dialog.returnValue === 'confirm') {
+            const confirmation = form.elements.namedItem('confirmed');
+            if (confirmation instanceof HTMLInputElement) {
+                confirmation.value = '1';
+            }
             form.submit();
         }
     });

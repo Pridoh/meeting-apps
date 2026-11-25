@@ -1,4 +1,19 @@
-# Fase 0 — siap diuji mahasiswa
+# Fase 1 — uji manual lulus, Fase 2 disetujui
+
+Checkpoint Fase 0: tag `phase-0`, commit `f041be7`. Mahasiswa mengonfirmasi uji manual lulus.
+
+## Verifikasi Fase 1
+
+- AC-01 dan AC-13–16 sudah tercakup dalam suite SQLite dan MySQL. Database pengembangan rapatin sudah dimigrasikan tanpa reset.
+- Dua proses PHP dengan koneksi MySQL terpisah mencoba finalisasi notulen yang sama. Hasilnya satu keputusan dan satu tugas.
+- Chromium menelusuri dashboard → buat meeting → tambah peserta dan agenda → simpan draf → proses Fake → ubah review → finalisasi. Peserta memperbarui tugasnya dan membuka notulen final di layar 390px.
+- Pengukuran lokal controller dashboard beserta render Blade, fixture MySQL 50 meeting dan 500 tugas: 22 ms untuk Organizer, 11 ms untuk Participant. Angka ini tidak mencakup jaringan atau rendering browser.
+- Panggilan Gemini diuji dengan respons HTTP simulasi termasuk data tak valid dan kegagalan koneksi. Uji live membutuhkan model dan API key; mode lokal sengaja memakai Fake.
+
+- Regresi akhir setelah catatan belajar: SQLite dan MySQL masing-masing lulus 23 tes dengan 310 assertion. Dua tes privasi memeriksa tugas yang terlihat peserta dan memastikan teks draf tak muncul dalam exception.
+- Pint, Vite build, Blade view:cache dan git diff --check lulus.
+
+## Hasil Fase 0
 
 24 November 2026. Fondasi selesai diimplementasikan. Login/logout, dashboard privat, lima komponen Blade, katalog ruang awal dan dua akun contoh berjalan di lingkungan lokal. Aplikasi di http://127.0.0.1:8000/login. Gunakan organizer@rapatin.test dengan nilai RAPATIN_DEMO_PASSWORD dari .env lokal. Panduan menjalankan ulang, alur kode dan latihan ada di LEARNING.md.
 

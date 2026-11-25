@@ -21,3 +21,11 @@ Setiap baris menunggu persetujuan fase tersendiri. Urutan migrasi usulan mengiku
 - [x] QA menjalankan tes, build dan uji migrasi/seeder di DB uji. Learning menyederhanakan bagian yang menyulitkan pembaca dan menguraikan alur login di LEARNING.md; QA mengulang tes terdampak.
 - [x] Lead mencatat hasil aktual di PROGRESS.md.
 - [x] Uji manual login/logout dikonfirmasi lulus oleh mahasiswa. Fase 1 disetujui.
+
+## Fase 1 — inti meeting, notulen dan tugas
+
+- [x] AC-01, AC-16: dashboard sesuai relasi pengguna, CRUD meeting, agenda terurut, anggota terdaftar, transisi status manual dan otorisasi per objek.
+- [x] AC-13: input teks atau TXT, provider Gemini dan Fake, validasi JSON, kegagalan tanpa kehilangan draf atau review.
+- [x] AC-14, AC-15: review tersimpan, transaksi finalisasi idempoten, assignee anggota meeting, progres tugas terpisah dari notulen final.
+- [x] Regresi SQLite/MySQL, alur browser Organizer dan Participant, review keamanan, materi belajar.
+- [x] Mahasiswa mengonfirmasi uji manual Fase 1 lulus dan menyetujui Fase 2.

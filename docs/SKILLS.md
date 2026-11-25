@@ -15,16 +15,6 @@ Skill adalah panduan kerja agen, bukan fitur aplikasi atau pengganti PRD. Baca `
 
 Untuk tugas yang mencakup beberapa aspek, gabungkan skill yang relevan: misalnya `ponytail` untuk perubahan kode dan `micro-interactions` untuk umpan balik tombol. Jangan menganggap panduan desain sebagai mandat mengganti identitas visual yang sudah disepakati. Gunakan [panduan belajar](LEARNING.md) dan PRD untuk memahami konteks produk terlebih dahulu.
 
-## Pembagian peran agen proyek
+## Penggunaan dalam satu sesi
 
-Peran dan batas delegasi mengikuti `AGENTS.md` dan berkas di `.codex/agents/`. Skill digunakan sesuai tugas, bukan sebagai alasan menambah cakupan.
-
-| Peran | Skill terkait | Tanggung jawab |
-|---|---|---|
-| Lead | `ponytail`, serta skill yang relevan dengan tugas | Memiliki kontrak, integrasi, keputusan, dan progres; membatasi delegasi dan memeriksa hasil sebelum serah terima. |
-| [backend](../.codex/agents/backend.toml) | `ponytail` | Mengimplementasikan backend dan menulis serta menjalankan tes penerimaan dan regresi rutin. |
-| [frontend](../.codex/agents/frontend.toml) | `anti-slop-design`, `micro-interactions`, `web-design-guidelines`; `design-taste-frontend` untuk landing page | Mengerjakan Blade, CSS, dan interaksi sesuai bagian 6 PRD; meninjau UI saat diminta. |
-| [qa](../.codex/agents/qa.toml) | `ponytail-review`; `ponytail-audit` untuk audit repositori sesuai cakupan | Meninjau perubahan kompleks atau sensitif secara independen dan menguji celah yang ditemukan. |
-| [learning](../.codex/agents/learning.toml) | `ponytail`, `ponytail-review` | Sekali per fase, menyederhanakan kode bila bermanfaat, menguji perilaku terdampak, dan memperbarui panduan belajar Indonesia. |
-
-`caveman` mengatur gaya jawaban ketika diminta pengguna dan tidak terikat ke satu peran. Setiap fase tetap memerlukan seluruh Definition of Done dan percobaan manual manusia sebelum fase berikutnya.
+Satu sesi Astra Medium memilih skill sesuai pekerjaan. Profil spesialis tersedia bila pengguna meminta delegasi. Untuk implementasi, review keamanan, pengujian dan materi UAS, ikuti alur di AGENTS.md.

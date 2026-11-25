@@ -20,3 +20,9 @@ Fase 0 memakai PHP 8.5 Herd Lite dengan driver PDO MySQL/SQLite. Gunakan MySQL u
 - GET/POST /login, GET /dashboard privat, POST /logout. Batasi lima kegagalan per pasangan email/IP selama 60 detik dengan cache database; kunci pendek mencegah dua request membaca kuota yang sama secara bersamaan. Registrasi dan verifikasi email masuk Fase 2.
 - Gunakan database aplikasi rapatin dan database uji rapatin_phase0_test yang terpisah di container MySQL 8.4 khusus proyek. Seeder hanya membuat contoh pada lingkungan lokal dan testing, serta mempertahankan akun yang sudah ada.
 - Pasang Boost dev dan gunakan versi patch kompatibel untuk paket yang terkena advisory pada lockfile awal. Delapan advisory awal menjadi nol sesudah pembaruan.
+
+## Fase 1
+
+- Implementasi mengikuti §14 untuk provider Gemini dan Fake. Aplikasi lokal memakai Fake supaya latihan UAS tidak membutuhkan kuota atau mengirim isi meeting. Untuk Gemini, isi GEMINI_API_KEY dan GEMINI_MODEL di environment serta pilih RAPATIN_AI_PROVIDER=gemini.
+- Anggaran 30 detik berlaku untuk pemrosesan provider beserta satu retry jika format jawaban salah. Respons gagal mempertahankan draf dan review.
+- Kolom teknis meeting_notes.revision menjaga agar tab lama atau hasil AI yang terlambat tidak menimpa perubahan baru. Perubahan isi draf menghapus hasil AI dan review lama. Finalisasi memeriksa kembali keanggotaan assignee saat memegang kunci baris meeting.

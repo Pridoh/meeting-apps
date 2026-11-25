@@ -10,7 +10,7 @@
 }
 
 @layer base {
-    :where(a, button, input):focus-visible {
+    :where(a, button, input, select, textarea, summary):focus-visible {
         @apply outline-2 outline-offset-4 outline-terracotta;
     }
 
@@ -174,15 +174,15 @@
     }
 
     .workspace-sidebar .brand-lockup {
-        @apply col-span-2;
+        @apply row-start-1;
     }
 
     .workspace-sidebar nav {
-        @apply md:mt-4;
+        @apply col-span-2 row-start-2 flex flex-wrap gap-1 md:mt-4 md:flex-col;
     }
 
     .workspace-sidebar form {
-        @apply md:mt-auto;
+        @apply col-start-2 row-start-1 md:mt-auto;
     }
 
     .workspace-sidebar .button {
@@ -190,12 +190,11 @@
     }
 
     .workspace-nav-link {
-        @apply flex min-h-11 items-center gap-3 rounded-md bg-peach px-3 py-2 text-sm font-semibold text-ink;
+        @apply flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-semibold text-soft hover:bg-soft/10;
     }
 
-    .dashboard-icon {
-        @apply size-3.5 rounded-xs border-2 border-current;
-        background: linear-gradient(currentColor, currentColor) center 3px / 100% 2px no-repeat;
+    .workspace-nav-link[aria-current='page'] {
+        @apply bg-peach text-ink;
     }
 
     .workspace-content {
@@ -210,8 +209,8 @@
         @apply rounded-xl border border-line bg-soft p-5 sm:p-7;
     }
 
-    .account-card {
-        @apply max-w-2xl;
+    .section-title {
+        @apply text-xl font-semibold tracking-tight text-terracotta;
     }
 
     .status-badge {
@@ -220,6 +219,14 @@
 
     .status-badge--success {
         @apply bg-success/15 text-ink;
+    }
+
+    .status-badge--warning {
+        @apply bg-warning/20 text-ink;
+    }
+
+    .status-badge--info {
+        @apply bg-info/15 text-ink;
     }
 
     .confirmation-modal {

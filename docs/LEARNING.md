@@ -84,3 +84,25 @@ Skema lengkap dan nama kolom terdapat di bagian 9 PRD final. Ini rancangan targe
 ## Urutan implementasi
 
 Ikuti bagian 14 PRD final: fondasi (fase 0), inti meeting dan notulen (fase 1), undangan (fase 2), bentrok dan H-1 (fase 3), ruang (fase 4), lalu penyempurnaan (fase 5). Kerjakan satu fase pada satu waktu, tulis tes skenario fase terlebih dahulu, dan lanjutkan setelah Definition of Done terpenuhi serta manusia mencoba alurnya.
+
+## Fase 1: alur meeting, notulen dan tugas
+
+- Modul Meetings memetakan URL ke controller. Form Request memvalidasi input dan Policy membatasi aksi berdasarkan pemilik atau anggota meeting.
+- MeetingController memakai MeetingService untuk perubahan status dan jadwal. SaveMeetingRequest mengubah waktu lokal sesuai zona meeting ke UTC saat disimpan. MeetingScheduleChanged mencatat versi saat waktu atau mode berubah.
+- meeting_participants menghubungkan akun dengan meeting. Penambahan hanya menerima email akun terdaftar. Menghapus anggota memerlukan konfirmasi dampak, mencabut akses, dan mengosongkan penanggung jawab tugas aktifnya.
+- Organizer menyimpan catatan di halaman notulen. NotesController meminta AiService. Konfigurasi lokal memilih FakeProvider agar demo tidak memerlukan API key. GeminiProvider mengirim judul, tanggal, deskripsi, agenda, peserta, dan draf. Jawaban JSON divalidasi, lalu Organizer menyimpan review yang telah diedit.
+- Perubahan notulen menaikkan meeting_notes.revision di bawah kunci transaksi meeting. Form dari tab lama ditolak. Mengubah draf menghapus hasil AI dan review lama. Finalisasi memvalidasi penanggung jawab lagi, lalu menyimpan keputusan, tugas, waktu dan pelaku dalam transaksi yang sama.
+- Isi notulen final dibaca dari review yang dibekukan. Participant hanya mendapat tugas miliknya. Organizer melihat semua tugas meeting. Perubahan status tugas tidak menulis ulang isi notulen.
+
+### Mencoba demo dan latihan UAS
+
+Seed lokal menyediakan organizer@rapatin.test dan peserta@rapatin.test. Password berasal dari RAPATIN_DEMO_PASSWORD saat pertama kali di-seed. Jalankan server seperti bagian Fase 0, lalu:
+
+1. Masuk sebagai Organizer. Buat meeting offline dengan waktu mulai dan selesai yang sah.
+2. Tambah email Participant dari akun demo. Tambahkan dua agenda dan ubah urutannya.
+3. Buka notulen, simpan catatan, proses dengan Fake, edit ringkasan dan keputusan, tambahkan tugas untuk Participant, lalu simpan review.
+4. Finalisasi notulen. Masuk sebagai Participant, buka daftar tugas, perbarui status tugasnya, lalu buka notulen final. Pastikan tugas akun lain tidak terlihat.
+5. Buka URL meeting Organizer sebagai Participant lain. Pastikan server menolak akses.
+6. Ubah draf sesudah review tersimpan. Review lama perlu diproses dan ditinjau ulang sebelum finalisasi.
+
+Pertanyaan presentasi: mengapa waktu disimpan UTC bersama zona meeting? Mengapa Policy server tetap dibutuhkan saat tombol tidak ditampilkan? Bagaimana revision mencegah penyimpanan dari tab lama? Apa manfaat transaksi saat finalisasi? Mengapa Participant tidak dapat mengubah tugas orang lain? Bagaimana Fake membantu menguji alur AI tanpa layanan eksternal?
