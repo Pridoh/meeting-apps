@@ -97,7 +97,9 @@ class MeetingParticipationTest extends TestCase
         $meetingUrl = '/meetings/'.$meeting->id;
 
         $this->actingAs($member);
-        $this->get('/meetings/'.$otherMeeting->id)->assertForbidden();
+        $this->get('/meetings/'.$otherMeeting->id)->assertForbidden()
+            ->assertSeeText('Akses terbatas')->assertDontSeeText($otherMeeting->title);
+        $this->get('/meetings/999999')->assertNotFound()->assertSeeText('Halaman tidak ditemukan');
         $this->get($meetingUrl.'/edit')->assertForbidden();
         $this->post($meetingUrl.'/agendas', ['title' => 'Agenda asing'])->assertForbidden();
         $this->post($meetingUrl.'/participants', ['email' => $otherOrganizer->email])->assertForbidden();

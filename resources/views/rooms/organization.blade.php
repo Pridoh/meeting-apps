@@ -87,13 +87,17 @@
         <div class="grid min-w-0 gap-4">
             @if ($owner)
                 <x-card>
-                    <h2 class="section-title">Tambah gedung</h2>
-                    @include('rooms.organization-building-form', ['editing' => null])
+                    <details>
+                        <summary class="section-title cursor-pointer">Tambah gedung</summary>
+                        @include('rooms.organization-building-form', ['editing' => null])
+                    </details>
                 </x-card>
                 @if ($buildings->isNotEmpty())
                     <x-card>
-                        <h2 class="section-title">Tambah ruang</h2>
-                        @include('rooms.organization-room-form', ['editing' => null])
+                        <details>
+                            <summary class="section-title cursor-pointer">Tambah ruang</summary>
+                            @include('rooms.organization-room-form', ['editing' => null])
+                        </details>
                     </x-card>
                 @endif
             @endif

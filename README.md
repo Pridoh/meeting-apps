@@ -1,58 +1,28 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RAPATIN
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi manajemen meeting untuk undangan, kehadiran, reservasi ruang organisasi, notulen, dan tindak lanjut.
 
-## About Laravel
+## Menjalankan demo lokal
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Gunakan PHP 8.5, Composer, Node.js dengan npm, MySQL, dan SMTP lokal (Mailpit). Pada mesin proyek ini, PHP dan Composer tersedia di `~/.config/herd-lite/bin`. Untuk instalasi baru, jalankan `composer install`, `npm ci`, lalu salin `.env.example` menjadi `.env` jika belum ada. Jalankan `php artisan key:generate` hanya untuk instalasi baru.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Isi koneksi database dan SMTP di `.env`. Samakan `APP_URL` dengan alamat server agar tautan email dapat dibuka. Untuk demo tanpa layanan AI eksternal, setel `RAPATIN_AI_PROVIDER=fake`. Tentukan `RAPATIN_DEMO_PASSWORD` sebelum seed pertama.
+2. Jalankan perintah berikut pada database pengembangan lokal.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+   ```bash
+   php artisan migrate
+   php artisan db:seed --class=PhaseOneMeetingSeeder
+   npm run build
+   composer run dev
+   ```
 
-## Learning Laravel
+3. Buka http://127.0.0.1:8000. Perintah terakhir menjalankan server, Vite, dan worker email. Di terminal kedua jalankan `php artisan schedule:work` untuk tenggat undangan dan rekap H-1.
+4. Gunakan profil browser terpisah untuk `organizer@rapatin.test`, `peserta@rapatin.test`, dan `reviewer@rapatin.test`. Jika diminta verifikasi, kirim email dari halaman tersebut dan buka tautannya di profil yang sama. Pada mesin proyek ini Mailpit tersedia di http://127.0.0.1:8026.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Seeder menyediakan meeting **Evaluasi Persiapan Kegiatan**, peserta, dan katalog PENS. Menjalankan seed ulang mempertahankan data yang sudah ada. Jika jadwal contoh sudah lewat, buat meeting offline baru untuk demo reservasi.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Verifikasi
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Jalankan `npm run build` hingga selesai sebelum `php artisan test --compact`. Suite default memakai SQLite dalam memori. Untuk MySQL, arahkan pengujian ke database khusus tes karena runner dapat membuat ulang tabel.
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
-```
-
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Lihat [panduan belajar dan skenario demo](docs/LEARNING.md) serta [hasil QC](docs/PROGRESS.md).

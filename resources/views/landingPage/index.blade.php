@@ -22,7 +22,7 @@
                     @endguest
                 </div>
                 <div class="cover-credit"><span>Final Project Workshop Teknologi Web dan Aplikasi</span>
-                    <p>Kelompok 1<br>Nixon Kenji Susanto - 2426600014<br>Ilham Frido Bagaskara - 2426600012<br>Nurhadi Firni Hadinullah - 2426600025</p></div>
+                    <p>Kelompok 1<br>Nixon Kenji Susanto<br>Ilham Frido Bagaskara<br>Nurhadi Firni Hadinullah</p></div>
             </div>
             <div class="hero-art">
                 <div class="orbit orbit-one"></div>

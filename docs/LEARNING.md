@@ -155,3 +155,12 @@ Pertanyaan presentasi: mengapa waktu disimpan UTC bersama zona meeting? Mengapa 
 **Latihan.** Setujui permohonan manajer JJ 303 sebagai pemilik PENS. Buat meeting offline mendatang, pilih PENS dari **Ruang**, ajukan JJ 303 dengan lampiran uji, lalu setujui dari akun manajer melalui **Antrean peninjauan**. Coba buka pengajuan dari akun yang mengelola ruang berbeda. Jika akun tersebut menjadi peserta meeting, periksa bahwa lokasi terkonfirmasi tetap muncul pada detail meeting.
 
 **Pertanyaan UAS.** Bagaimana aplikasi membedakan akses lokasi meeting dari akses dokumen reservasi? Mengapa pengecekan bentrok diulang setelah baris ruang dikunci?
+
+## Fase 5 — latihan presentasi
+
+1. Ikuti README untuk menyiapkan data. Masuk sebagai Organizer, buat meeting offline mendatang, buka **Ruang**, pilih PENS, lalu ajukan **Gedung D3 → JJ 303**. Pada akun peninjau, ajukan peran manajer JJ 303 jika belum ditugaskan. Setelah pemilik menyetujui penugasan, setujui reservasi dari antrean peninjau.
+2. Undang alamat baru lewat detail meeting. Di profil browser lain, buka undangan dari Mailpit, daftar, verifikasi email, lalu terima. Tunjukkan lokasi JJ 303 kepada peserta. Coba buka URL detail pengajuan dari akun itu. Kebijakan akses mengembalikan HTTP 403, dan Blade menampilkan penjelasan tanpa rincian pengajuan.
+3. Di **Kehadiran**, pilih hadir. Sebagai Organizer, buka rekap, lalu simpan draf notulen. Proses dengan provider demo, koreksi ringkasan, tambahkan tindak lanjut beserta penanggung jawab, simpan review, dan finalisasi. Sebagai peserta, ubah status tugas menjadi selesai.
+4. Untuk menjelaskan alur kode, telusuri route modul Notes hingga proses finalisasi, kemudian buka tampilan tugas di `resources/views/action-items/row.blade.php`. Tunjukkan di database bagaimana status tugas dapat berubah setelah notulen dikunci.
+
+**Pertanyaan UAS.** Apa perbedaan antara diterima sebagai peserta meeting dan ditugaskan sebagai manajer ruang? Mengapa waktu render dashboard di server berbeda dari waktu sampai halaman siap digunakan di ponsel?

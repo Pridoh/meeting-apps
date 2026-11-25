@@ -283,7 +283,7 @@
 .pitch-cover .ai-sticker small {
     display: block;
     font-size: 14px;
-    opacity: .6;
+    color: var(--cream);
     margin-top: 5px;
 }
 @media (min-width:1600px) {

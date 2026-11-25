@@ -57,18 +57,17 @@
                     <h2 id="tugas-heading" class="section-title">Tugas pribadi</h2>
                     <a class="back-link mb-0" href="{{ route('action-items.index') }}">Lihat tugas <span aria-hidden="true">→</span></a>
                 </div>
-                <p class="mt-3 text-sm font-semibold text-muted tabular-nums"><span class="text-lg text-terracotta">{{ $completedTaskCount }} dari {{ $participantTaskCount }}</span> tugas selesai</p>
                 @if ($participantTaskCount)
+                    <p class="mt-3 text-sm font-semibold text-muted tabular-nums"><span class="text-lg text-terracotta">{{ $completedTaskCount }} dari {{ $participantTaskCount }}</span> tugas selesai</p>
                     <progress class="mt-2 block h-2 w-full accent-terracotta" max="{{ $participantTaskCount }}" value="{{ $completedTaskCount }}" aria-label="Progres tugas pribadi"></progress>
-                @endif
-                <p class="mt-3 text-sm text-muted">
-                    @if ($nearestDeadline)
-                        Tenggat terdekat <time datetime="{{ $nearestDeadline }}">{{ Illuminate\Support\Carbon::parse($nearestDeadline)->locale('id')->translatedFormat('d M Y') }}</time>
-                    @else
-                        Belum ada tenggat mendatang.
-                    @endif
-                </p>
-                @if ($participantTasks->isNotEmpty())
+                    <p class="mt-3 text-sm text-muted">
+                        @if ($nearestDeadline)
+                            Tenggat terdekat <time datetime="{{ $nearestDeadline }}">{{ Illuminate\Support\Carbon::parse($nearestDeadline)->locale('id')->translatedFormat('d M Y') }}</time>
+                        @else
+                            Belum ada tenggat mendatang.
+                        @endif
+                    </p>
+
                     <ul class="mt-3 divide-y divide-line border-t border-line">
                         @foreach ($participantTasks as $task)
                             <li class="py-3">
@@ -76,6 +75,8 @@
                             </li>
                         @endforeach
                     </ul>
+                @else
+                    <p class="empty-state mt-3">Anda belum memiliki tugas.</p>
                 @endif
             </x-card>
         </div>

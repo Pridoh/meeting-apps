@@ -23,7 +23,7 @@
             @endif
         </p>
 
-        <div class="mt-4 overflow-x-auto">
+        <div class="mt-4 overflow-x-auto focus-visible:outline-2 focus-visible:outline-terracotta" role="region" aria-label="Tabel rekap kehadiran" tabindex="0">
             <table class="w-full border-collapse text-sm tabular-nums">
                 <caption class="sr-only">Perbandingan angka kehadiran terkini dan rekap H-1</caption>
                 <thead class="bg-cream text-terracotta">

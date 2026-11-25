@@ -1,3 +1,14 @@
+# Fase 5 — QC selesai, menunggu uji manual akhir
+
+Pengguna menyetujui kelanjutan ke Fase 5. Checkpoint Fase 4B adalah `phase-4b` (`296271b`).
+
+- Suite fitur yang mencakup AC-01–22 lulus pada SQLite dan MySQL, masing-masing 40 tes dan 591 assertion. Build Vite, cache Blade, Pint, pemeriksaan platform Composer, dan audit dependensi Composer/npm lulus. Vite memberi peringatan font opsional dan URL font publik; Chromium berhasil memuat aset.
+- Pada database demo terpisah dari seeder, Chromium memverifikasi peminjaman JJ 303, unduhan lampiran 3 MB, pendaftaran dari undangan melalui Mailpit, verifikasi, konfirmasi lokasi, kehadiran, review AI demo, finalisasi, serta penyelesaian tugas oleh peserta. Akses peserta ke detail pengajuan ditolak. Pencarian pada log aplikasi tidak menemukan fragmen undangan, tanda tangan URL, atau isi contoh draf dan berkas QC.
+- QC UI mencakup 22 kasus halaman/peran pada 320, 390, 834, dan 1440 px. Pemeriksaan axe WCAG A/AA pada 320 dan 1440 px selesai tanpa temuan pada kondisi yang diuji. Pemeriksaan akhir juga mencakup halaman 403/404, navigasi keyboard, dan tangkapan layar beranda, dashboard, serta organisasi. Kontras teks sampul dan fokus keyboard tabel rekap telah diperbaiki.
+- Pengukuran MySQL lokal, 50 meeting dan 500 tugas, lima render dashboard per peran termasuk controller dan Blade. Organizer 7–15 ms, peserta 9 ms. Waktu jaringan dan gambar di perangkat pengguna berada di luar pengukuran.
+- QC visual lanjutan berdasarkan dua tangkapan layar mahasiswa. Form pencarian ruang mengelompokkan waktu alternatif dan hasil per gedung. Halaman tamu memakai header ringkas, navigasi ponsel tersusun dalam kisi, dan formulir pengelolaan gedung/ruang dapat dibuka saat diperlukan. Chromium memeriksa 24 kondisi halaman pada empat lebar layar, termasuk alur cek waktu khusus, kembali ke jadwal meeting, lalu buka formulir JJ 303. Regresi SQLite/MySQL tetap 40 tes dan 591 assertion per database.
+- Berikutnya mahasiswa menjalankan skenario di bagian Fase 5 LEARNING.md dan mengonfirmasi hasil sebelum checkpoint akhir. Integrasi AI live belum diuji dengan kredensial eksternal.
+
 # Fase 4B — siap diuji mahasiswa
 
 Antrean peninjauan dibatasi per organisasi dan penugasan ruang. AC-09–12, AC-17, AC-21–22 diverifikasi. SQLite dan MySQL masing-masing lulus 40 tes dan 587 assertion. Dua proses MySQL yang menyetujui slot identik menghasilkan satu reservasi aktif. Pengajuan kedua tetap menunggu dengan pesan slot terisi.

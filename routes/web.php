@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\File;
 
 /*
@@ -21,7 +22,7 @@ if (! File::isDirectory($modulesPath)) {
 $moduleDirectories = File::directories($modulesPath);
 
 foreach ($moduleDirectories as $modulePath) {
-    $routesFile = $modulePath . '/Config/Routes.php';
+    $routesFile = $modulePath.'/Config/Routes.php';
 
     if (File::exists($routesFile)) {
         require $routesFile;

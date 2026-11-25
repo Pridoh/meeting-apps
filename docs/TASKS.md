@@ -58,4 +58,11 @@ Setiap baris menunggu persetujuan fase tersendiri. Urutan migrasi usulan mengiku
 
 - [x] Adaptasi reservasi, lampiran dan antrean dengan pemeriksaan organisasi serta penugasan ruang. Pertahankan aturan versi dan konkurensi.
 - [x] Ulangi AC-09–12 dan AC-17, tambah AC-21–22 dan regresi meeting.
-- [ ] Uji manual dan checkpoint sebelum Fase 5.
+- [x] Kelanjutan ke Fase 5 disetujui dan checkpoint 4B disimpan.
+
+## Fase 5 — penyempurnaan dan demo
+
+- [x] Regresi lintas modul di SQLite/MySQL, demo dari seeder melalui browser dan Mailpit.
+- [x] QC responsif, aksesibilitas, keadaan kosong, error, izin per objek, dan pengukuran dashboard.
+- [x] Panduan menjalankan demo dan latihan presentasi.
+- [ ] Uji manual akhir oleh mahasiswa dan checkpoint Fase 5.
