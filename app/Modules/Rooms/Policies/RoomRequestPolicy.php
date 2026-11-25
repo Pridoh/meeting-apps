@@ -17,6 +17,7 @@ class RoomRequestPolicy
     public function review(User $user, RoomRequest $booking): bool
     {
         return $user->id !== $booking->requester_id
+            && $booking->room->building_id !== null
             && $this->belongsToRoomOrganization($user, $booking)
             && $booking->submitted_at !== null
             && DB::table('room_reviewers')->where('room_id', $booking->room_id)->where('user_id', $user->id)->exists();

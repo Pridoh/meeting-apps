@@ -1,10 +1,16 @@
+# Fase 4B — siap diuji mahasiswa
+
+Antrean peninjauan dibatasi per organisasi dan penugasan ruang. AC-09–12, AC-17, AC-21–22 diverifikasi. SQLite dan MySQL masing-masing lulus 40 tes dan 587 assertion. Dua proses MySQL yang menyetujui slot identik menghasilkan satu reservasi aktif. Pengajuan kedua tetap menunggu dengan pesan slot terisi.
+
+Chromium memverifikasi pengajuan manajer JJ 303, persetujuan penugasan, unggahan 3 MB, unduhan privat, persetujuan ruang, dan lokasi meeting pada empat lebar layar. Build Vite dan kompilasi Blade lulus. Uji manual mahasiswa dan checkpoint Fase 4B menunggu persetujuan sebelum Fase 5.
+
 # Fase 4A — siap diuji mahasiswa
 
 ORG-01–05 disetujui. Organisasi, kode bergabung, gedung, katalog, dan pengajuan manajer siap diuji. Verifikasi SQLite dan MySQL masing-masing lulus 37 tes dan 548 assertion. Chromium memeriksa katalog PENS pada 320, 390, 834 dan 1440 px. Build Vite dan kompilasi Blade lulus.
 
 Migrasi dan seeder lokal memindahkan dua ruang demo tanpa mengganti ID. Satu pengajuan, satu reservasi, dan dua penugasan peninjau tetap tersimpan. Katalog PENS berisi lima ruang contoh di Gedung SAW dan Gedung D3, dengan kapasitas simulasi 30 kursi per ruang.
 
-Uji manual dan checkpoint Fase 4A menunggu. Pemesanan ruang dari katalog organisasi merupakan cakupan Fase 4B.
+Pemilik proyek menyetujui kelanjutan ke Fase 4B. Checkpoint `phase-4a` (`025a8ee`) mencakup katalog dan integrasi awal pengajuan ruang.
 
 # Fase 4 — siap diuji mahasiswa
 

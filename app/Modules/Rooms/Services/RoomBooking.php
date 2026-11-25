@@ -30,7 +30,13 @@ class RoomBooking
 
     public function roomsForReviewer(User $reviewer): Builder
     {
-        return DB::table('room_reviewers')->where('user_id', $reviewer->id)->select('room_id');
+        return DB::table('room_reviewers')
+            ->join('rooms', 'rooms.id', '=', 'room_reviewers.room_id')
+            ->join('buildings', 'buildings.id', '=', 'rooms.building_id')
+            ->join('organization_memberships', 'organization_memberships.organization_id', '=', 'buildings.organization_id')
+            ->where('room_reviewers.user_id', $reviewer->id)
+            ->where('organization_memberships.user_id', $reviewer->id)
+            ->select('room_reviewers.room_id');
     }
 
     /**

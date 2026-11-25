@@ -147,3 +147,11 @@ Pertanyaan presentasi: mengapa waktu disimpan UTC bersama zona meeting? Mengapa 
 **Latihan.** Masuk sebagai Organizer Demo dan buka **Organisasi → POLITEKNIK ELEKTRONIKA NEGERI SURABAYA**. Salin kode gabung dari halaman pemilik. Buka profil browser terpisah sebagai peserta, gabung dengan kode, dan ajukan diri sebagai manajer salah satu ruang SAW. Kembali sebagai pemilik dan setujui. Pastikan akses kepemilikan tidak muncul pada akun peserta, dan status manajer hanya muncul pada ruang yang disetujui.
 
 **Pertanyaan UAS.** Kenapa akses katalog perlu diperiksa lagi ketika URL diganti? Mengapa persetujuan dan penugasan harus satu transaksi?
+
+## Fase 4B — reservasi dalam organisasi
+
+`RoomBookingController` memilih organisasi dari keanggotaan pengguna dan memfilter katalog serta antrean. `RoomRequestPolicy` memeriksa pemohon atau hubungan peninjau dengan ruang dan organisasi pada saat detail atau lampiran dibuka. `RoomBooking` memeriksa versi pengajuan dan mengunci ruang sebelum menyimpan reservasi.
+
+**Latihan.** Setujui permohonan manajer JJ 303 sebagai pemilik PENS. Buat meeting offline mendatang, pilih PENS dari **Ruang**, ajukan JJ 303 dengan lampiran uji, lalu setujui dari akun manajer melalui **Antrean peninjauan**. Coba buka pengajuan dari akun yang mengelola ruang berbeda. Jika akun tersebut menjadi peserta meeting, periksa bahwa lokasi terkonfirmasi tetap muncul pada detail meeting.
+
+**Pertanyaan UAS.** Bagaimana aplikasi membedakan akses lokasi meeting dari akses dokumen reservasi? Mengapa pengecekan bentrok diulang setelah baris ruang dikunci?

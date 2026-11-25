@@ -111,11 +111,15 @@ class RoomBookingController
     {
         Gate::authorize('view', $booking);
         $booking->load('meeting', 'room', 'requester');
-        $hasReviewer = DB::table('room_reviewers')->where('room_id', $booking->room_id)
-            ->where('user_id', '!=', $booking->requester_id)->exists();
+        $building = DB::table('buildings')->find($booking->room->building_id);
+        $organization = $building ? Organization::findOrFail($building->organization_id) : null;
+        $hasReviewer = $organization && DB::table('room_reviewers')
+            ->where('room_id', $booking->room_id)->where('user_id', '!=', $booking->requester_id)
+            ->whereIn('user_id', $organization->members()->select('users.id'))
+            ->exists();
 
         return view('rooms.show', [
-            'booking' => $booking, 'hasReviewer' => $hasReviewer,
+            'booking' => $booking, 'hasReviewer' => $hasReviewer, 'organization' => $organization, 'building' => $building,
             'attachments' => $service->attachments($booking)->get(),
             'decisions' => DB::table('room_request_decisions')->where('room_request_id', $booking->id)
                 ->when($booking->requester_id !== auth()->id(), fn ($query) => $query->where('request_version', $booking->version))
@@ -125,16 +129,23 @@ class RoomBookingController
 
     public function review(Request $request, RoomBooking $service): View
     {
+        $request->validate(['organization' => ['nullable', 'integer']]);
         $rooms = $service->roomsForReviewer($request->user());
-        abort_unless((clone $rooms)->exists(), 403);
+        $organizations = Organization::whereIn('id', (clone $rooms)->select('buildings.organization_id'))
+            ->orderBy('name')->get();
+        abort_if($organizations->isEmpty(), 403);
+        $organization = $request->filled('organization')
+            ? $organizations->find($request->integer('organization'))
+            : $organizations->first();
+        abort_unless($organization, 404);
 
-        return view('rooms.review', ['bookings' => RoomRequest::with('room', 'meeting', 'requester')
-            ->whereIn('room_id', $rooms)->where('requester_id', '!=', $request->user()->id)
-            ->whereHas('room', fn ($query) => $query->where(fn ($rooms) => $rooms
-                ->whereNull('building_id')->orWhereIn('building_id', DB::table('buildings')->select('buildings.id')
-                ->join('organization_memberships', 'organization_memberships.organization_id', '=', 'buildings.organization_id')
-                ->where('organization_memberships.user_id', $request->user()->id))))
-            ->where('status', 'submitted')->oldest('submitted_at')->paginate(15)]);
+        $bookings = RoomRequest::with('room', 'meeting', 'requester')
+            ->whereIn('room_id', $rooms->where('buildings.organization_id', $organization->id))
+            ->where('requester_id', '!=', $request->user()->id)
+            ->where('status', 'submitted')->oldest('submitted_at')->paginate(15)->withQueryString();
+        $buildings = DB::table('buildings')->where('organization_id', $organization->id)->pluck('name', 'id');
+
+        return view('rooms.review', compact('bookings', 'organizations', 'organization', 'buildings'));
     }
 
     public function decide(Request $request, RoomRequest $booking, RoomBooking $service): RedirectResponse

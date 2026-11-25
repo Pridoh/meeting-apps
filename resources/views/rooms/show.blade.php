@@ -14,7 +14,7 @@
     @endphp
 
     <header class="workspace-heading">
-        <a class="back-link" href="{{ $owner && ! $booking->meeting->trashed() ? route('meetings.show', $booking->meeting) : route($owner ? 'rooms.index' : 'room-requests.review') }}">Kembali</a>
+        <a class="back-link" href="{{ $owner && ! $booking->meeting->trashed() ? route('meetings.show', $booking->meeting) : route($owner ? 'rooms.index' : 'room-requests.review', ['organization' => $organization?->id]) }}">Kembali</a>
         <div class="flex flex-wrap items-center gap-3">
             <h1 class="page-title">Pengajuan ruang</h1>
             <x-status-badge :variant="$variant">{{ $booking::STATUSES[$booking->status] }}</x-status-badge>
@@ -32,6 +32,10 @@
         <x-card>
             <h2 class="section-title">Detail peminjaman</h2>
             <dl class="mt-4 grid gap-4 text-sm">
+                @if ($organization)
+                    <div><dt class="font-semibold">Organisasi</dt><dd class="wrap-anywhere text-muted">{{ $organization->name }}</dd></div>
+                    <div><dt class="font-semibold">Gedung</dt><dd class="text-muted">{{ $building->name }}</dd></div>
+                @endif
                 <div><dt class="font-semibold">Ruang</dt><dd class="text-muted">{{ $booking->room->name }} · {{ $booking->room->location }}</dd></div>
                 <div><dt class="font-semibold">Pemohon</dt><dd class="text-muted">{{ $booking->requester->name }}</dd></div>
                 <div><dt class="font-semibold">Jadwal</dt><dd class="text-muted">{{ $booking->start_time->timezone($zone)->format('d/m/Y H:i') }}–{{ $booking->end_time->timezone($zone)->format('d/m/Y H:i') }} ({{ $zone }})</dd></div>

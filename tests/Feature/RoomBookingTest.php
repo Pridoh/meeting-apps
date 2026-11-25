@@ -111,6 +111,68 @@ class RoomBookingTest extends TestCase
         $this->assertSame('none', $meeting->fresh()->room_status);
     }
 
+    public function test_review_queue_and_attachments_require_the_selected_organization_and_room_assignment(): void
+    {
+        Storage::fake('local');
+        $assigned = $this->room();
+        $otherOrganization = $this->room();
+        $unassigned = $assigned->replicate()->forceFill(['name' => 'Ruang tanpa penugasan']);
+        $unassigned->save();
+        $reviewer = User::factory()->create();
+        $observer = User::factory()->create();
+        $bookings = [];
+
+        foreach ([$assigned, $unassigned, $otherOrganization] as $room) {
+            $meeting = Meeting::factory()->create(['title' => 'Rapat ruang '.$room->id]);
+            $this->join($meeting->organizer, $room);
+            $this->actingAs($meeting->organizer);
+            $this->send($meeting, $room)->assertSessionHasNoErrors();
+            $bookings[$room->id] = DB::table('room_requests')->where('room_id', $room->id)->sole();
+        }
+        foreach ([$assigned, $otherOrganization] as $room) {
+            $this->join($reviewer, $room);
+            DB::table('room_reviewers')->insert(['room_id' => $room->id, 'user_id' => $reviewer->id]);
+        }
+        DB::table('room_reviewers')->insert(['room_id' => $assigned->id, 'user_id' => $observer->id]);
+
+        $this->actingAs($reviewer)->get(route('room-requests.review', ['organization' => $assigned->organizationId()]))
+            ->assertOk()
+            ->assertSee('Rapat ruang '.$assigned->id)
+            ->assertDontSee('Rapat ruang '.$unassigned->id)
+            ->assertDontSee('Rapat ruang '.$otherOrganization->id);
+        $this->get(route('room-requests.review', ['organization' => $otherOrganization->organizationId()]))
+            ->assertOk()->assertSee('Rapat ruang '.$otherOrganization->id);
+        $this->get(route('room-requests.show', $bookings[$unassigned->id]->id))->assertForbidden();
+        $this->decide($bookings[$unassigned->id]->id)->assertForbidden();
+        $foreignFile = DB::table('room_request_attachments')->where('room_request_id', $bookings[$otherOrganization->id]->id)->sole();
+        $this->get(route('room-requests.attachment', [$bookings[$assigned->id]->id, $foreignFile->id]))->assertNotFound();
+        $this->actingAs($observer)->get(route('room-requests.review'))->assertForbidden();
+        $this->get(route('room-requests.show', $bookings[$assigned->id]->id))->assertForbidden();
+    }
+
+    public function test_deactivated_building_blocks_new_requests_and_approval(): void
+    {
+        Storage::fake('local');
+        $room = $this->room();
+        $meeting = Meeting::factory()->create();
+        $reviewer = User::factory()->create();
+        $this->join($meeting->organizer, $room);
+        $this->join($reviewer, $room);
+        DB::table('room_reviewers')->insert(['room_id' => $room->id, 'user_id' => $reviewer->id]);
+        $this->actingAs($meeting->organizer);
+        $this->send($meeting, $room)->assertSessionHasNoErrors();
+        $id = DB::table('room_requests')->sole()->id;
+
+        DB::table('buildings')->where('id', $room->building_id)->update(['is_active' => false]);
+        $this->get(route('rooms.index', ['organization' => $room->organizationId()]))
+            ->assertOk()->assertDontSee($room->name);
+        $this->send($meeting, $room)->assertSessionHasErrors('room_id');
+        $this->actingAs($reviewer);
+        $this->decide($id)->assertSessionHasErrors('room_id');
+        $this->decide($id, 'rejected')->assertSessionHasNoErrors();
+        $this->assertDatabaseCount('room_reservations', 0);
+    }
+
     public function test_decisions_follow_versions_conflict_rules_and_confirmed_schedule_changes(): void
     {
         Notification::fake();
@@ -138,6 +200,12 @@ class RoomBookingTest extends TestCase
         $this->actingAs($reviewer);
         $this->decide($requests[$a->id])->assertSessionHasErrors('version');
         $this->decide($requests[$a->id], 'approved', 2)->assertSessionHasNoErrors();
+        $participant = User::factory()->create();
+        $a->participants()->attach($participant);
+        $this->actingAs($participant)->get(route('meetings.show', $a))->assertOk()->assertSee($room->name);
+        $this->get(route('room-requests.show', $requests[$a->id]))->assertForbidden();
+        $this->get(route('rooms.index'))->assertOk()->assertDontSee($room->name);
+        $this->actingAs($reviewer);
         $this->decide($requests[$b->id])->assertSessionHasErrors('room_id');
         $this->assertDatabaseHas('room_requests', ['id' => $requests[$b->id], 'status' => 'submitted']);
         $this->decide($requests[$b->id], 'rejected')->assertSessionHasNoErrors();

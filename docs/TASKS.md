@@ -52,9 +52,10 @@ Setiap baris menunggu persetujuan fase tersendiri. Urutan migrasi usulan mengiku
 
 - [x] Kunci keputusan produk dan pemetaan katalog lama sesuai PRD §16.
 - [x] Tambahkan organisasi, gabung melalui kode, gedung, katalog dan pengajuan manajer. Verifikasi AC-18–20.
-- [ ] Uji manual dan checkpoint sebelum 4B.
+- [x] Kelanjutan ke 4B disetujui dan checkpoint disimpan sebagai `phase-4a`.
 
 ## Fase 4B — reservasi dalam organisasi
 
-- [ ] Adaptasi reservasi, lampiran dan antrean dengan pemeriksaan organisasi serta penugasan ruang. Pertahankan aturan versi dan konkurensi.
-- [ ] Ulangi AC-09–12 dan AC-17, tambah AC-21–22 dan regresi meeting. Uji manual dan checkpoint sebelum Fase 5.
+- [x] Adaptasi reservasi, lampiran dan antrean dengan pemeriksaan organisasi serta penugasan ruang. Pertahankan aturan versi dan konkurensi.
+- [x] Ulangi AC-09–12 dan AC-17, tambah AC-21–22 dan regresi meeting.
+- [ ] Uji manual dan checkpoint sebelum Fase 5.
