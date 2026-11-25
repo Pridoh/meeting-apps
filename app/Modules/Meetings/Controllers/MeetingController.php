@@ -8,6 +8,7 @@ use App\Modules\Meetings\Requests\UpdateMeetingStatusRequest;
 use App\Modules\Meetings\Services\MeetingService;
 use App\Modules\Notes\Models\MeetingNote;
 use App\Modules\Participation\Models\Invitation;
+use App\Modules\Rooms\Services\RoomBooking;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,11 +39,11 @@ class MeetingController
         return to_route('meetings.show', $meeting)->with('success', 'Meeting dibuat.');
     }
 
-    public function show(Request $request, Meeting $meeting): View
+    public function show(Request $request, Meeting $meeting, RoomBooking $rooms): View
     {
         Gate::authorize('view', $meeting);
         $isOrganizer = $request->user()->can('update', $meeting);
-        $meeting->load('organizer', 'agendas');
+        $meeting->load('organizer', 'agendas', 'room');
         if ($isOrganizer) {
             $meeting->load('participants');
         }
@@ -50,6 +51,7 @@ class MeetingController
         return view('meetings.show', [
             'meeting' => $meeting,
             'isOrganizer' => $isOrganizer,
+            'roomRequest' => $isOrganizer ? $rooms->latest($meeting) : null,
             'invitations' => $isOrganizer ? Invitation::where('meeting_id', $meeting->id)->with('deliveries')->latest('id')->get() : collect(),
             'canOpenNotes' => $isOrganizer || MeetingNote::where('meeting_id', $meeting->id)->where('is_finalized', true)->exists(),
             'actionItems' => $meeting->actionItems()->visibleTo($request->user())->with('assignee')->get(),
@@ -65,7 +67,7 @@ class MeetingController
 
     public function update(SaveMeetingRequest $request, Meeting $meeting, MeetingService $service): RedirectResponse
     {
-        $service->update($meeting, $request->meetingData());
+        $service->update($meeting, $request->meetingData(), $request->boolean('confirm_room_release'));
 
         return to_route('meetings.show', $meeting)->with('success', 'Meeting diperbarui.');
     }

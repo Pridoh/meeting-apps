@@ -7,6 +7,7 @@ use App\Modules\Meetings\Models\Meeting;
 use App\Modules\Meetings\Notifications\MeetingChanged;
 use App\Modules\Participation\Models\Invitation;
 use App\Modules\Participation\Services\AttendanceRecap;
+use App\Modules\Rooms\Services\RoomBooking;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
@@ -14,17 +15,18 @@ use Illuminate\Validation\ValidationException;
 
 class MeetingService
 {
-    public function __construct(private AttendanceRecap $recap) {}
+    public function __construct(private AttendanceRecap $recap, private RoomBooking $rooms) {}
 
     /** @param array{title: string, description?: string|null, start_time: string, end_time: string, timezone: string, mode: string, location?: string|null} $details */
-    public function update(Meeting $meeting, array $details): void
+    public function update(Meeting $meeting, array $details, bool $confirmRoomRelease = false): void
     {
         $this->recap->captureDue();
-        DB::transaction(function () use ($meeting, $details): void {
+        DB::transaction(function () use ($meeting, $details, $confirmRoomRelease): void {
             $current = Meeting::lockForUpdate()->findOrFail($meeting->id);
             $current->fill($details);
             $scheduleChanged = $current->isDirty(['start_time', 'end_time', 'mode']);
             if ($scheduleChanged) {
+                $this->rooms->invalidate($current, $confirmRoomRelease);
                 $current->schedule_version++;
                 $current->schedule_version_at = now();
             }
@@ -70,6 +72,7 @@ class MeetingService
             $current = Meeting::lockForUpdate()->findOrFail($meeting->id);
             $this->notifyParticipants($current, true);
             Invitation::where('meeting_id', $current->id)->whereIn('status', ['pending', 'accepted'])->update(['status' => 'revoked']);
+            $this->rooms->invalidate($current, confirmed: true);
             $current->delete();
         });
     }

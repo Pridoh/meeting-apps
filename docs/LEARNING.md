@@ -128,3 +128,22 @@ Pertanyaan presentasi: mengapa waktu disimpan UTC bersama zona meeting? Mengapa 
 **Coba di browser.** Buat dua meeting offline yang bertumpuk dan undang email terverifikasi yang sama ke keduanya. Buka **Kehadiran** sebagai penerima, pilih meeting pertama, lalu pilih meeting kedua. Periksa bahwa pilihan pertama berubah menjadi **Meeting lain dipilih**. Buka **Detail → Rekap kehadiran** sebagai Organizer. Coba URL rekap sebagai peserta dan pastikan akses ditolak. Untuk batas waktu tanpa menunggu 24 jam, jalankan `vendor/bin/phpunit tests/Feature/AttendanceTest.php`.
 
 **Latihan UAS.** Tambahkan pertemuan C yang bersinggungan dengan B tetapi mulai tepat saat A selesai. Prediksi pilihan apa yang bertahan jika peserta memilih A, C, lalu B. Jelaskan mengapa kunci baris akun diperlukan pada dua permintaan bersamaan dan mengapa jumlah snapshot tidak berubah setelah koreksi terlambat.
+
+## Fase 4 — peminjaman ruang
+
+- `RoomBookingController` menampilkan katalog, formulir, dan antrean. Waktu pengajuan mengikuti jadwal meeting. Rekap kehadiran memberi jumlah terkonfirmasi sebagai referensi, sedangkan Organizer mengisi kebutuhan total termasuk panitia.
+- `RoomBooking` menyimpan versi pengajuan, lampiran, dan keputusan. Berkas berada di penyimpanan privat dan hanya dikirim setelah `RoomRequestPolicy` memeriksa hubungan pemohon atau peninjau dengan pengajuan.
+- Persetujuan mengunci baris meeting dan ruang, memeriksa versi pengajuan serta interval reservasi aktif, kemudian menyimpan keputusan dan reservasi dalam satu transaksi. Pengajuan menunggu tidak memblokir slot. Pertemuan yang mulai tepat saat reservasi lain selesai tidak bertumpuk.
+- Menggeser waktu atau mode setelah persetujuan meminta konfirmasi, melepas reservasi lama, dan menutup pengajuan lama. Untuk pindah ruang, gunakan **Lepas reservasi** sebelum memilih ruang lain.
+
+**Coba di browser.** Buat meeting offline yang akan datang, lalu buka **Ruang** atau **Cari dan ajukan ruang**. Pilih ruang, isi jumlah orang, dan unggah PDF atau gambar uji. Masuk dengan `reviewer@rapatin.test` di profil browser terpisah dan buka **Ruang → Antrean peninjauan**. Gunakan nilai `RAPATIN_DEMO_PASSWORD` seperti akun demo lain. Minta perbaikan, kirim ulang sebagai Organizer, lalu setujui versi terbaru sebagai peninjau. Periksa lokasi terkonfirmasi di detail meeting. Coba buka tautan lampiran dari akun peserta dan ubah jadwal meeting yang sudah disetujui.
+
+**Latihan UAS.** Jelaskan mengapa kunci baris ruang mencegah dua reservasi bersamaan dan bagaimana versi pengajuan menjaga keputusan tetap terkait dengan lampiran yang ditinjau. Uji slot yang dimulai tepat saat reservasi sebelumnya selesai.
+
+## Fase 4A — organisasi dan katalog ruang
+
+`OrganizationController` menerima permintaan buat atau gabung organisasi. `OrganizationPolicy` memeriksa keanggotaan untuk melihat katalog dan kepemilikan untuk mengubahnya. Organisasi ruang ditentukan melalui gedung. Persetujuan pengajuan manajer mengubah status dan menulis ke `room_reviewers` dalam satu transaksi.
+
+**Latihan.** Masuk sebagai Organizer Demo dan buka **Organisasi → POLITEKNIK ELEKTRONIKA NEGERI SURABAYA**. Salin kode gabung dari halaman pemilik. Buka profil browser terpisah sebagai peserta, gabung dengan kode, dan ajukan diri sebagai manajer salah satu ruang SAW. Kembali sebagai pemilik dan setujui. Pastikan akses kepemilikan tidak muncul pada akun peserta, dan status manajer hanya muncul pada ruang yang disetujui.
+
+**Pertanyaan UAS.** Kenapa akses katalog perlu diperiksa lagi ketika URL diganti? Mengapa persetujuan dan penugasan harus satu transaksi?

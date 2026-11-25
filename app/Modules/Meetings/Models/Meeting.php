@@ -5,6 +5,7 @@ namespace App\Modules\Meetings\Models;
 use App\Models\User;
 use App\Modules\ActionItems\Models\ActionItem;
 use App\Modules\Meetings\Policies\MeetingPolicy;
+use App\Modules\Rooms\Models\Room;
 use Database\Factories\MeetingFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
@@ -53,6 +54,11 @@ class Meeting extends Model
     public function organizer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function room(): BelongsTo
+    {
+        return $this->belongsTo(Room::class);
     }
 
     public function agendas(): HasMany

@@ -8,7 +8,8 @@ Setiap baris menunggu persetujuan fase tersendiri. Urutan migrasi usulan mengiku
 | 1 | meetings sesudah users dan rooms → agendas, meeting_participants (tanpa FK undangan dahulu), meeting_notes → decisions dan action_items. Fake dan Gemini melalui AiService. | AC-01, 13–16. Demo dari pembuatan meeting sampai pembaruan tugas pribadi |
 | 2 | invitations → invitation_deliveries → tambah invitation_id nullable dan FK pada meeting_participants. Pertahankan anggota lama. Verifikasi email, pengiriman setelah commit, kedaluwarsa terjadwal. | AC-02–04 dan kotak surat uji |
 | 3 | attendance_choices → attendance_snapshots. Riwayat dan mekanisme snapshot sesuai keputusan H-1. | AC-05–08, jam terkendali, pilihan konkuren di MySQL |
-| 4 | room_reviewers → room_requests → room_request_attachments, room_request_decisions, room_reservations. Gunakan rooms dari fondasi. | AC-09–12, 17, dua koneksi MySQL independen |
+| 4A | organizations → organization_memberships dan buildings → FK gedung pada rooms → room_manager_applications. Pakai ulang room_reviewers. | AC-18–20, pemetaan data lama |
+| 4B | Adaptasi room_requests, room_request_attachments, room_request_decisions dan room_reservations yang ada. | AC-09–12, AC-17, AC-21–22, dua koneksi MySQL independen |
 | 5 | Integrasi semua modul, seed demo, responsif dan dokumentasi menjalankan aplikasi | AC-01–17, dashboard <2 detik dengan ±50 meeting/500 tugas, demo end-to-end |
 
 ## Fase 0 — pelaksanaan
@@ -40,3 +41,20 @@ Setiap baris menunggu persetujuan fase tersendiri. Urutan migrasi usulan mengiku
 - [x] AC-05–08, migrasi, scheduler, UI peserta dan rekap Organizer.
 - [x] Regresi SQLite dan MySQL, dua pilihan MySQL konkuren, browser responsif, dan panduan belajar.
 - [x] Mahasiswa menyelesaikan uji manual Fase 3 dan menyetujui Fase 4.
+
+## Fase 4 awal — katalog dan peminjaman ruang
+
+- [x] AC-09–12 dan AC-17. Katalog, formulir, versi pengajuan, berkas privat, dan antrean peninjau.
+- [x] Regresi SQLite dan MySQL, dua persetujuan MySQL bersamaan, uji browser, dan panduan belajar.
+- [ ] Uji manual model organisasi dan checkpoint dipindahkan ke Fase 4A–4B.
+
+## Fase 4A — organisasi dan katalog
+
+- [x] Kunci keputusan produk dan pemetaan katalog lama sesuai PRD §16.
+- [x] Tambahkan organisasi, gabung melalui kode, gedung, katalog dan pengajuan manajer. Verifikasi AC-18–20.
+- [ ] Uji manual dan checkpoint sebelum 4B.
+
+## Fase 4B — reservasi dalam organisasi
+
+- [ ] Adaptasi reservasi, lampiran dan antrean dengan pemeriksaan organisasi serta penugasan ruang. Pertahankan aturan versi dan konkurensi.
+- [ ] Ulangi AC-09–12 dan AC-17, tambah AC-21–22 dan regresi meeting. Uji manual dan checkpoint sebelum Fase 5.

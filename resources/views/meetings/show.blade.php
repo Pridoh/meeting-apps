@@ -69,7 +69,11 @@
                     <div class="sm:col-span-2">
                         <dt class="field-label mb-1">Lokasi atau tautan</dt>
                         <dd class="wrap-anywhere text-muted">
-                            @if (preg_match('~^https?://~i', $meeting->location ?? '') && filter_var($meeting->location, FILTER_VALIDATE_URL))
+                            @if ($meeting->room_status === 'confirmed' && $meeting->room)
+                                {{ $meeting->room->name }} · {{ $meeting->room->location }}
+                            @elseif ($meeting->room_status === 'pending')
+                                Ruang menunggu persetujuan
+                            @elseif (preg_match('~^https?://~i', $meeting->location ?? '') && filter_var($meeting->location, FILTER_VALIDATE_URL))
                                 <a class="text-terracotta underline underline-offset-4" href="{{ $meeting->location }}">{{ $meeting->location }}</a>
                             @else
                                 {{ $meeting->location ?? 'Belum diisi' }}
@@ -84,6 +88,20 @@
                     @endif
                 </dl>
             </x-card>
+            @if ($isOrganizer && $meeting->mode === 'offline')
+                <x-card>
+                    <h2 class="section-title">Peminjaman ruang</h2>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        @if ($roomRequest)
+                            <a class="button button--secondary" href="{{ route('room-requests.show', $roomRequest) }}">Lihat pengajuan</a>
+                        @endif
+                        @if ($meeting->status === 'scheduled' && $meeting->start_time->isFuture()
+                            && ! in_array($roomRequest?->status, ['submitted', 'approved'], true))
+                            <a class="button button--primary" href="{{ route('rooms.index', ['meeting' => $meeting->id]) }}">Cari dan ajukan ruang</a>
+                        @endif
+                    </div>
+                </x-card>
+            @endif
             @include('meetings.agendas')
         </div>
 

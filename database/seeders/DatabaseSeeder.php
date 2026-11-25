@@ -25,5 +25,7 @@ class DatabaseSeeder extends Seeder
         foreach (['Ruang Diskusi' => 12, 'Ruang Seminar' => 40] as $name => $capacity) {
             Room::firstOrCreate(['location' => 'Gedung Demo', 'name' => $name], ['capacity' => $capacity]);
         }
+
+        $this->call([RoomReviewerSeeder::class, OrganizationCatalogSeeder::class]);
     }
 }

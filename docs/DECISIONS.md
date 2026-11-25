@@ -32,3 +32,15 @@ Fase 0 memakai PHP 8.5 Herd Lite dengan driver PDO MySQL/SQLite. Gunakan MySQL u
 - Hash SHA-256 mengidentifikasi token acak. Tautan membawa token di fragmen URL dan browser menukarnya melalui POST untuk sesi undangan. Penerimaan dan penolakan memakai akun dengan email tujuan yang telah diverifikasi.
 - Kirim ulang merotasi token pada undangan yang sama. Kuota harian memakai zona waktu meeting. Undangan terminal dapat diganti dengan undangan baru. Undangan pending dapat dicabut langsung. Untuk anggota accepted, Organizer memakai Hapus peserta dengan konfirmasi dampak, yang juga mencabut undangannya.
 - Database queue mengantrekan job terenkripsi setelah transaksi berhasil. SMTP lokal menuju Mailpit di port 1026, kotak masuk di port 8026. Pengiriman gagal dicatat pada upaya tersebut. Anggota lama tetap dapat mempunyai invitation_id kosong.
+
+## Fase 4
+
+- Lokasi terkonfirmasi dibaca dari relasi ruang, sehingga lokasi bebas meeting dapat digunakan kembali jika reservasi dilepas. Berkas dan keputusan menggunakan versi pengajuan. Peninjau melihat versi terkait ruang dan pengajuan yang sedang dibuka.
+- Urutan kunci dimulai dari meeting. Persetujuan kemudian mengunci ruang sebelum membaca reservasi aktif. Perubahan jadwal atau penarikan reservasi disimpan bersama pembaruan status meeting.
+- Server dev dari `composer run dev` menerima unggahan sedikit di atas batas aplikasi agar Laravel dapat memvalidasi tiga berkas masing-masing 5 MB. Untuk server PHP bawaan saja, gunakan `php -d upload_max_filesize=6M -d post_max_size=17M -S 127.0.0.1:8000 -t public`.
+
+## Adendum organisasi — Fase 4A dan 4B
+
+- Ruang memperoleh konteks organisasi dari gedung. Tetap gunakan satu database, Policy per objek, dan `room_reviewers` untuk penugasan manajer. Persetujuan manajer dan keputusan reservasi tetap dua operasi dengan izin berbeda.
+- Alur reservasi Fase 4 yang sudah berjalan menjadi dasar Fase 4B. Pertahankan versi, penyimpanan privat, kunci ruang, dan pelepasan atomik. Meeting tetap memakai izin berbasis relasi meeting.
+- ORG-01–05 disetujui dan dicatat di PRD §16. Katalog demo PENS memakai kapasitas simulasi. Pemetaan memelihara ID ruang dan relasinya.

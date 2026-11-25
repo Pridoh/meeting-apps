@@ -15,7 +15,7 @@ class InvitationController
 {
     private function invitation(Request $request): Invitation
     {
-        $invite = Invitation::with('meeting.organizer')->where('token_hash', $request->session()->get('invite_hash', ''))->first();
+        $invite = Invitation::with('meeting.organizer', 'meeting.room')->where('token_hash', $request->session()->get('invite_hash', ''))->first();
         abort_unless($invite && $invite->meeting && $invite->expires_at->isFuture() && in_array($invite->status, ['pending', 'accepted', 'declined'], true), 410, 'Undangan tidak berlaku. Minta undangan baru kepada Organizer.');
 
         return $invite;

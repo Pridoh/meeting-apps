@@ -26,7 +26,15 @@
                 <time datetime="{{ $end->toIso8601String() }}">{{ $end->locale('id')->translatedFormat($start->isSameDay($end) ? 'H.i' : 'd M Y, H.i') }}</time>
                 <span class="block font-normal text-muted">{{ $meeting->timezone }}</span>
             </p>
-            <p class="mt-2 wrap-anywhere text-sm text-muted">{{ $meeting->location }} · {{ $meeting->room_status }}</p>
+            <p class="mt-2 wrap-anywhere text-sm text-muted">
+                @if ($meeting->room_status === 'confirmed' && $meeting->room)
+                    {{ $meeting->room->name }} · {{ $meeting->room->location }}
+                @elseif ($meeting->room_status === 'pending')
+                    Ruang menunggu persetujuan
+                @else
+                    {{ $meeting->location }}
+                @endif
+            </p>
         </section>
 
         @guest
