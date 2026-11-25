@@ -1,6 +1,5 @@
-@props(['href'])
+@props(['href', 'light' => false])
 
 <a href="{{ $href }}" class="brand-lockup">
-    <span class="brand-mark" aria-hidden="true"></span>
-    <span>RAPATIN</span>
+    <img src="{{ asset($light ? 'rapatin-logo-light.png' : 'rapatin-logo.png') }}" width="185" height="80" alt="RAPATIN">
 </a>

@@ -1,0 +1,383 @@
+@font-face {
+    font-family: 'DM Sans';
+    src: url('/fonts/dmsans-700.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'DM Sans';
+    src: url('/fonts/dmsans-400.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Manrope';
+    src: url('/fonts/manrope-700.ttf') format('truetype');
+    font-weight: 700;
+    font-display: swap;
+}
+.pitch-cover {
+    --ink: #713f35;
+    --white: #fcf9f5;
+    --clay: #b96850;
+    --peach: #dda18e;
+    --cream: #f4e8dc;
+    --muted: #8a6c62;
+    --line: #713f3525;
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-synthesis: none;
+}
+.pitch-header, .pitch-navigation {
+    display: flex;
+    align-items: center;
+    padding-inline: 5%;
+    gap: 22px;
+    background: #fcf9f5;
+    color: #713f35;
+    border-block: 1px solid #713f3525;
+}
+.pitch-header { height: 100px; }
+.pitch-header .brand-lockup { margin-right: auto; }
+.pitch-edition { font-size: 15px; letter-spacing: 2px; font-weight: 600; }
+.pitch-navigation { min-height: 80px; justify-content: flex-end; }
+.pitch-navigation a { padding-block: 12px; }
+.pitch-navigation a:hover { text-decoration: underline; }
+.pitch-cover .primary { display: inline-block; }
+@media(max-width:700px) {
+    .pitch-header, .pitch-navigation { min-height: 70px; height: auto; }
+    .pitch-edition { display: none; }
+}
+.pitch-cover {
+    min-height: calc(100svh - 180px);
+    padding: 5vh 7%;
+    position: relative;
+    overflow: hidden;
+    align-content: center;
+}
+.pitch-cover h1, .pitch-cover h2, .pitch-cover p {
+    margin: 0;
+}
+.pitch-cover h1, .pitch-cover h2 {
+    font-family: 'Manrope',sans-serif;
+}
+.pitch-cover h1 {
+    font-size: clamp(35px,4vw,65px);
+    line-height: 1.13;
+    letter-spacing: -2.5px;
+    font-weight: 700;
+}
+.pitch-cover h1 em {
+    font-style: normal;
+    color: var(--clay);
+}
+.pitch-cover h2 {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -1px;
+}
+.pitch-cover p {
+    line-height: 1.7;
+}
+.pitch-cover .eyebrow {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.pitch-cover .eyebrow:before {
+    content: '';
+    width: 22px;
+    height: 2px;
+    background: currentColor;
+}
+.pitch-cover .intro {
+    font-size: 21px;
+    line-height: 1.8;
+    max-width: 600px;
+    margin-top: 24px;
+    color: var(--muted);
+}
+.pitch-cover {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 20px;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+}
+.pitch-cover h1 {
+    font-size: clamp(46px,5.1vw,82px);
+    letter-spacing: -3.8px;
+}
+.pitch-cover .cover-copy {
+    align-self: center;
+}
+.pitch-cover .cover-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+}
+.pitch-cover .primary {
+    background: var(--ink);
+    color: var(--white);
+    padding: 17px 23px;
+    border-radius: 5px;
+    font-size: 17px;
+}
+.pitch-cover .cover-credit {
+    margin-top: 45px;
+}
+.pitch-cover .cover-credit>span {
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+}
+.pitch-cover .cover-credit p {
+    font-size: 15px;
+    margin-top: 7px;
+    color: var(--muted);
+}
+.pitch-cover .hero-art {
+    min-height: 480px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pitch-cover .orbit {
+    position: absolute;
+    width: 430px;
+    height: 430px;
+    border: 1px solid #b9685029;
+    border-radius: 50%;
+    background: radial-gradient(circle,#f4e8dc99,transparent 65%);
+}
+.pitch-cover .orbit-two {
+    width: 530px;
+    height: 530px;
+    background: none;
+}
+.pitch-cover .paper {
+    width: 300px;
+    min-height: 360px;
+    padding: 26px;
+    background: var(--white);
+    box-shadow: 0 25px 60px #713f351c;
+    border: 1px solid #713f3515;
+    transform: rotate(-7deg);
+    position: relative;
+    z-index: 2;
+}
+.pitch-cover .paper-back {
+    position: absolute;
+    transform: rotate(8deg) translate(15px,10px);
+    background: var(--peach);
+    border: 0;
+    box-shadow: none;
+}
+.pitch-cover .paper-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 1px;
+}
+.pitch-cover .paper-logo {
+    font-size: 26px;
+    font-weight: 700;
+}
+.pitch-cover .paper-top>span:last-child {
+    font-size: 30px;
+    color: var(--clay);
+}
+.pitch-cover .paper h2 {
+    font-size: 26px;
+    margin-top: 20px;
+    letter-spacing: -1px;
+}
+.pitch-cover .paper-rule {
+    height: 1px;
+    background: var(--line);
+    margin: 18px 0;
+}
+.pitch-cover .paper small {
+    font-size: 13px;
+    letter-spacing: 1.6px;
+    font-weight: 700;
+}
+.pitch-cover .paper p {
+    font-size: 14px;
+    margin: 8px 0 15px;
+}
+.pitch-cover .paper-task {
+    font-size: 14px;
+    margin: 10px 0;
+    display: flex;
+    gap: 9px;
+    align-items: center;
+}
+.pitch-cover .paper-task span {
+    background: var(--cream);
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    border-radius: 3px;
+}
+.pitch-cover .paper-bottom {
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-top: 1px solid var(--line);
+    margin-top: 20px;
+    padding-top: 13px;
+    display: flex;
+    justify-content: space-between;
+}
+.pitch-cover .floating-note {
+    position: absolute;
+    z-index: 3;
+    top: 25px;
+    right: 15px;
+    font-size: 14px;
+    background: var(--cream);
+    padding: 13px 18px;
+    border-radius: 30px;
+    transform: rotate(5deg);
+}
+.pitch-cover .note-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--clay);
+    border-radius: 50%;
+    margin-right: 7px;
+}
+.pitch-cover .ai-sticker {
+    position: absolute;
+    z-index: 3;
+    bottom: 35px;
+    right: 0;
+    transform: rotate(5deg);
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    background: var(--ink);
+    color: var(--white);
+    padding: 17px 25px;
+    border-radius: 6px;
+    box-shadow: 0 14px 25px #713f3520;
+}
+.pitch-cover .ai-sticker>span {
+    font-size: 30px;
+    color: var(--peach);
+}
+.pitch-cover .ai-sticker div {
+    font-size: 16px;
+}
+.pitch-cover .ai-sticker small {
+    display: block;
+    font-size: 14px;
+    opacity: .6;
+    margin-top: 5px;
+}
+@media (min-width:1600px) {
+    .pitch-cover {
+        padding-left: max(7%,calc((100vw - 1450px)/2));
+        padding-right: max(7%,calc((100vw - 1450px)/2));
+    }
+}
+@media (max-width:1000px) {
+    .pitch-cover {
+        min-height: calc(100svh - 155px);
+        padding: 40px 6%;
+    }
+    .pitch-cover .hero-art {
+        transform: scale(.85);
+        transform-origin: center;
+        min-height: 440px;
+    }
+    .pitch-cover {
+        gap: 0;
+        grid-template-columns: 1fr 1fr;
+    }
+    .pitch-cover h1 {
+        font-size: 50px;
+    }
+    .pitch-cover .intro {
+        font-size: 19px;
+    }
+}
+@media (max-width:700px) {
+    .pitch-cover {
+        min-height: calc(100svh - 140px);
+        padding: 35px 7%;
+        align-content: start;
+        overflow: hidden;
+    }
+    .pitch-cover h1 {
+        font-size: 35px;
+        letter-spacing: -1.6px;
+    }
+    .pitch-cover .eyebrow {
+        font-size: 13px;
+        letter-spacing: 1.6px;
+        margin-bottom: 20px;
+    }
+    .pitch-cover .intro {
+        font-size: 19px;
+        margin-top: 20px;
+    }
+    .pitch-cover {
+        display: flex;
+        flex-direction: column;
+        padding-top: 40px;
+    }
+    .pitch-cover h1 {
+        font-size: 49px;
+        letter-spacing: -2.7px;
+    }
+    .pitch-cover .cover-credit {
+        margin-top: 25px;
+    }
+    .pitch-cover .cover-credit p {
+        font-size: 14px;
+    }
+    .pitch-cover .cover-actions {
+        margin-top: 22px;
+    }
+    .pitch-cover .primary {
+        padding: 14px 20px;
+    }
+    .pitch-cover .hero-art {
+        min-height: 410px;
+        transform: scale(.83);
+        margin-top: -10px;
+        margin-bottom: -35px;
+        width: 100%;
+    }
+    .pitch-cover .paper {
+        width: 290px;
+    }
+    .pitch-cover .orbit {
+        width: 380px;
+        height: 380px;
+    }
+    .pitch-cover .orbit-two {
+        width: 470px;
+        height: 470px;
+    }
+    .pitch-cover .floating-note {
+        right: -15px;
+        top: 5px;
+    }
+    .pitch-cover .ai-sticker {
+        right: -20px;
+        bottom: 10px;
+    }
+}

@@ -122,12 +122,14 @@ Before relying on a package's API, confirm its installed version:
 
 # RAPATIN development
 
-The main session is Lead. At phase start or resume, check Git status, docs/PROGRESS.md, TASKS.md, DECISIONS.md and LEARNING.md under docs/, the relevant sections of .codex/PRD-RAPATIN-final.md and the implementation they govern. Preserve local work and these project rules when refreshing Boost guidelines.
+Use one GPT-6.2 Sol session with Medium reasoning for planning, backend, frontend, testing, security, readability, and documentation. Subagent delegation is off by default. Spawn a subagent only with the user's explicit approval for the assignment.
 
-Use one GPT-6.2 Astra Medium session for planning, Laravel and Blade implementation, security review, testing, integration and learning documentation. Native subagents are disabled by default. Enable delegation only on explicit user request. Changing the model or increasing reasoning effort requires approval.
+Use `.codex/PRD-RAPATIN-final.md` as the source of truth. At phase start or resume, check Git status and the relevant entries in `docs/PROGRESS.md`, `docs/TASKS.md`, `docs/DECISIONS.md`, and `docs/LEARNING.md`. Read only the PRD sections and source files relevant to the assignment. Preserve local work and these rules when refreshing Boost guidelines.
 
-Batch related work around PRD acceptance criteria. Write acceptance tests first. Reuse verified results for unchanged paths, run affected regressions after refactoring, and complete required phase checks. Review object authorization and transaction boundaries within the same session. Make one readability pass and update the Indonesian walkthrough per phase.
+Batch related work around PRD acceptance criteria. Write required acceptance tests first, reuse valid results for unaffected paths, and rerun affected tests after changes. Complete all required phase checks and preserve validation, object authorization, transaction boundaries, and data integrity protections.
 
-Apply relevant installed skills after reading their SKILL.md. Keep reports, terminal output and documentation concise. Follow PRD §§2–3, 7–9 and 14–15. Use standard Laravel MVC and module routes, thin controllers, Form Requests, Policies and readable services. Preserve authorization, validation, transactions, locks, unique constraints and all required tests. Protect private data and obtain approval for destructive actions or scope changes.
+Apply installed `.codex/` skills selectively after reading the relevant `SKILL.md`. For frontend work, apply the relevant design skills and maintain a polished, cohesive, responsive interface in every phase. Follow the PRD palette and reuse shared Blade components.
 
-Stop when the assignment and its Definition of Done are satisfied. Record results and pending checks in the existing phase documents. Each phase requires student manual testing, the PRD checkpoint and explicit approval before advancing.
+Follow KISS, YAGNI, and pragmatic DRY. Write straightforward Laravel and Blade code a first-year student can explain. Simplify unnecessary abstractions, complex logic, and excessive comments when there is a concrete benefit. Fix confirmed problems and avoid repeated scans, redundant reviews, and speculative refactoring. Protect private data and obtain approval for destructive actions or scope changes.
+
+Keep responses, terminal output, and documentation concise. Update `docs/LEARNING.md` once per phase with short Indonesian learning notes and code walkthroughs for the UAS. Record results and pending checks in the existing phase documents. Stop when the assignment and its Definition of Done are satisfied. Each phase requires student manual testing, the PRD checkpoint, and explicit user approval before advancing.

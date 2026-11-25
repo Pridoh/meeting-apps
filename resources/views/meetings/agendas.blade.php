@@ -1,7 +1,7 @@
 <x-card aria-labelledby="agenda-heading">
     <h2 id="agenda-heading" class="section-title">Agenda</h2>
     @if ($meeting->agendas->isEmpty())
-        <p class="mt-3 text-muted">Belum ada agenda.</p>
+        <p class="empty-state mt-3">Belum ada agenda.</p>
     @else
         <ol class="mt-2 divide-y divide-line">
             @foreach ($meeting->agendas as $agenda)

@@ -1,4 +1,18 @@
-# Fase 1 — uji manual lulus, Fase 2 disetujui
+# Fase 3 — uji manual lulus
+
+AC-05–08 lulus. SQLite dan MySQL masing-masing lulus 30 tes dengan 442 assertion. Dua proses MySQL menyimpan pilihan yang bertumpuk untuk akun yang sama. Kedua permintaan selesai dan hanya satu pilihan hadir yang tersisa. Uji waktu terkendali memastikan pilihan tepat H-1 masuk rekap dan hitungan 12/5/3 tetap sama setelah angka terkini menjadi 13/4/3.
+
+Migrasi aditif berhasil di database pengembangan. Scheduler mendaftarkan `rapatin:snapshot-h1` setiap lima menit. Chromium memeriksa halaman Kehadiran dan Rekap kehadiran pada 390, 834 dan 1440 px, termasuk pengiriman lewat keyboard dan penolakan akses rekap untuk peserta.
+
+Mahasiswa menyelesaikan uji manual Fase 3 dan menyetujui Fase 4. Checkpoint mencakup Fase 2, Fase 3, dan pembaruan antarmuka setelah pengujian.
+
+# Fase 2 — uji manual dikonfirmasi
+
+25 November 2026. Fase 1 lulus uji manual dan dicatat pada tag phase-1 (4a19509). Fase 2 mengganti penambahan anggota langsung dengan undangan email. Suite SQLite dan MySQL masing-masing lulus 26 tes dan 352 assertion, termasuk kegagalan pengiriman, kirim ulang, identitas terverifikasi, respons berulang, pencabutan serta kedaluwarsa. Build Vite dan kompilasi Blade berhasil.
+
+Chromium membuka email undangan di Mailpit, mendaftarkan akun baru, mengikuti email verifikasi, kembali ke undangan, menerima, dan membuka meeting privat. Konfigurasi demo memakai worker database dan SMTP lokal. Petunjuk uji manual terdapat di LEARNING.md.
+
+## Fase 1 — uji manual lulus, Fase 2 disetujui
 
 Checkpoint Fase 0: tag `phase-0`, commit `f041be7`. Mahasiswa mengonfirmasi uji manual lulus.
 

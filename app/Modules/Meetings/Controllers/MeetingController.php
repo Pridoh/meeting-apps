@@ -7,6 +7,7 @@ use App\Modules\Meetings\Requests\SaveMeetingRequest;
 use App\Modules\Meetings\Requests\UpdateMeetingStatusRequest;
 use App\Modules\Meetings\Services\MeetingService;
 use App\Modules\Notes\Models\MeetingNote;
+use App\Modules\Participation\Models\Invitation;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -49,6 +50,7 @@ class MeetingController
         return view('meetings.show', [
             'meeting' => $meeting,
             'isOrganizer' => $isOrganizer,
+            'invitations' => $isOrganizer ? Invitation::where('meeting_id', $meeting->id)->with('deliveries')->latest('id')->get() : collect(),
             'canOpenNotes' => $isOrganizer || MeetingNote::where('meeting_id', $meeting->id)->where('is_finalized', true)->exists(),
             'actionItems' => $meeting->actionItems()->visibleTo($request->user())->with('assignee')->get(),
         ]);

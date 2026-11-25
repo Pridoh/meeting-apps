@@ -1,5 +1,5 @@
 import './notes';
-document.querySelector('main input[aria-invalid="true"]')?.focus();
+document.querySelector('main :is(input, select, textarea)[aria-invalid="true"]')?.focus();
 
 for (const form of document.querySelectorAll('form[data-confirm-with]')) {
     const dialog = document.getElementById(form.dataset.confirmWith);

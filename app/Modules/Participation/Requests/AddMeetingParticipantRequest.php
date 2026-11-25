@@ -20,6 +20,6 @@ class AddMeetingParticipantRequest extends FormRequest
     /** @return array<string, string> */
     public function messages(): array
     {
-        return ['email.*' => 'Masukkan alamat email akun terdaftar yang valid.'];
+        return ['email.*' => 'Masukkan alamat email penerima yang valid.'];
     }
 }

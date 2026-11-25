@@ -106,3 +106,25 @@ Seed lokal menyediakan organizer@rapatin.test dan peserta@rapatin.test. Password
 6. Ubah draf sesudah review tersimpan. Review lama perlu diproses dan ditinjau ulang sebelum finalisasi.
 
 Pertanyaan presentasi: mengapa waktu disimpan UTC bersama zona meeting? Mengapa Policy server tetap dibutuhkan saat tombol tidak ditampilkan? Bagaimana revision mencegah penyimpanan dari tab lama? Apa manfaat transaksi saat finalisasi? Mengapa Participant tidak dapat mengubah tugas orang lain? Bagaimana Fake membantu menguji alur AI tanpa layanan eksternal?
+
+## Fase 2: dari undangan sampai menjadi anggota
+
+1. MeetingParticipantController meneruskan email ke InvitationService. Service menormalkan email, mengunci baris meeting, lalu menyimpan undangan dan satu catatan pengiriman. Indeks unik active_email melindungi alamat pending atau accepted dari duplikasi.
+2. Worker menjalankan SendInvitation setelah commit. Saat peserta membuka tautan, halaman undangan menampilkan jadwal dan Organizer. Membuka email belum membuat keanggotaan.
+3. Penerima dapat masuk atau mendaftar. RegistrationController memeriksa tautan verifikasi bertanda tangan dan mengembalikan pengguna ke undangan. Akun dengan email berbeda harus berganti akun.
+4. Saat Terima, InvitationService memeriksa kembali token, waktu dan email lalu mengubah status serta menambah anggota dalam satu transaksi. Tolak menyimpan respons tanpa menambah anggota. Menekan tombol yang sama lagi mempertahankan hasil pertama.
+
+**Latihan manual.** Di http://127.0.0.1:8000 buat undangan untuk akun demo dan satu alamat baru. Buka http://127.0.0.1:8026 untuk membaca email. Gunakan jendela privat untuk mendaftar dengan alamat baru, lalu buka tautan verifikasi pada jendela yang sama. Terima dan periksa daftar peserta. Untuk undangan kedua, coba akun berbeda, kirim ulang setelah satu menit, lalu uji tautan lama dan pencabutan. Setelah restart jalankan container rapatin-mailpit dan rapatin-phase0-mysql, php artisan queue:work, php artisan schedule:work, serta server aplikasi.
+
+**Pertanyaan UAS.** Apa perbedaan status pengiriman dan status respons? Mengapa data undangan dan keanggotaan perlu disimpan dalam satu transaksi saat diterima? Bagaimana tautan lama kehilangan akses setelah kirim ulang? Gunakan tests/Feature/InvitationTest.php untuk menelusuri kasusnya.
+
+## Fase 3 — bentrok dan rekap H-1
+
+- `AttendanceController` menerima pilihan dari halaman **Kehadiran**. Form Request memvalidasi pilihan dan versi jadwal. Service hanya memakai undangan yang terkait dengan email yang terverifikasi atau keanggotaan akun tersebut.
+- `AttendanceService` menghitung irisan dengan dua perbandingan. Jam mulai A harus lebih awal dari jam selesai B dan jam mulai B harus lebih awal dari jam selesai A. Lalu service mengunci baris akun, memeriksa versi jadwal dan mencatat riwayat pilihan beserta perubahan jadwal yang bertumpuk dalam satu transaksi.
+- `AttendanceRecap` menghitung tiap email satu kali. Scheduler menyimpan snapshot unik per meeting dan versi jadwal setelah tenggat. Pilihan tepat pada tenggat masuk rekap. Koreksi setelah tenggat memengaruhi angka terkini. Perubahan waktu atau mode menaikkan versi sehingga pilihan lama disimpan sebagai riwayat dan peserta diminta mengonfirmasi ulang.
+- `attendance_choices` menghubungkan akun ke meeting beserta versi yang dipilih. `attendance_snapshots` menyimpan jumlah per kategori untuk satu versi meeting offline. Hanya Organizer pemilik meeting yang bisa membuka rekap.
+
+**Coba di browser.** Buat dua meeting offline yang bertumpuk dan undang email terverifikasi yang sama ke keduanya. Buka **Kehadiran** sebagai penerima, pilih meeting pertama, lalu pilih meeting kedua. Periksa bahwa pilihan pertama berubah menjadi **Meeting lain dipilih**. Buka **Detail → Rekap kehadiran** sebagai Organizer. Coba URL rekap sebagai peserta dan pastikan akses ditolak. Untuk batas waktu tanpa menunggu 24 jam, jalankan `vendor/bin/phpunit tests/Feature/AttendanceTest.php`.
+
+**Latihan UAS.** Tambahkan pertemuan C yang bersinggungan dengan B tetapi mulai tepat saat A selesai. Prediksi pilihan apa yang bertahan jika peserta memilih A, C, lalu B. Jelaskan mengapa kunci baris akun diperlukan pada dua permintaan bersamaan dan mengapa jumlah snapshot tidak berubah setelah koreksi terlambat.

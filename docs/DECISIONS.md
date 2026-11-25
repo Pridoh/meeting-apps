@@ -26,3 +26,9 @@ Fase 0 memakai PHP 8.5 Herd Lite dengan driver PDO MySQL/SQLite. Gunakan MySQL u
 - Implementasi mengikuti §14 untuk provider Gemini dan Fake. Aplikasi lokal memakai Fake supaya latihan UAS tidak membutuhkan kuota atau mengirim isi meeting. Untuk Gemini, isi GEMINI_API_KEY dan GEMINI_MODEL di environment serta pilih RAPATIN_AI_PROVIDER=gemini.
 - Anggaran 30 detik berlaku untuk pemrosesan provider beserta satu retry jika format jawaban salah. Respons gagal mempertahankan draf dan review.
 - Kolom teknis meeting_notes.revision menjaga agar tab lama atau hasil AI yang terlambat tidak menimpa perubahan baru. Perubahan isi draf menghapus hasil AI dan review lama. Finalisasi memeriksa kembali keanggotaan assignee saat memegang kunci baris meeting.
+
+## Fase 2
+
+- Hash SHA-256 mengidentifikasi token acak. Tautan membawa token di fragmen URL dan browser menukarnya melalui POST untuk sesi undangan. Penerimaan dan penolakan memakai akun dengan email tujuan yang telah diverifikasi.
+- Kirim ulang merotasi token pada undangan yang sama. Kuota harian memakai zona waktu meeting. Undangan terminal dapat diganti dengan undangan baru. Undangan pending dapat dicabut langsung. Untuk anggota accepted, Organizer memakai Hapus peserta dengan konfirmasi dampak, yang juga mencabut undangannya.
+- Database queue mengantrekan job terenkripsi setelah transaksi berhasil. SMTP lokal menuju Mailpit di port 1026, kotak masuk di port 8026. Pengiriman gagal dicatat pada upaya tersebut. Anggota lama tetap dapat mempunyai invitation_id kosong.

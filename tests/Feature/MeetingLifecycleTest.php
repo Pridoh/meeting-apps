@@ -9,11 +9,45 @@ use App\Modules\Meetings\Notifications\MeetingChanged;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
 class MeetingLifecycleTest extends TestCase
 {
     use LazilyRefreshDatabase;
+
+    public function test_a_guest_can_register_and_create_a_meeting_without_an_invitation(): void
+    {
+        Notification::fake();
+        $this->withoutVite();
+        $this->get(route('register'))->assertOk()
+            ->assertSee('Buat akun untuk mengatur meeting')
+            ->assertDontSee('Untuk merespons undangan ini');
+
+        $account = User::factory()->make();
+        $this->post(route('register'), [
+            'name' => $account->name,
+            'email' => $account->email,
+            'password' => 'test-password',
+            'password_confirmation' => 'test-password',
+        ])->assertRedirectToRoute('verification.notice');
+
+        $user = User::where('email', $account->email)->sole();
+        $this->get(URL::temporarySignedRoute('verification.verify', now()->addMinutes(15), [
+            'id' => $user->id,
+            'hash' => sha1($user->email),
+        ]))->assertRedirectToRoute('dashboard');
+        $this->assertTrue($user->fresh()->hasVerifiedEmail());
+
+        $start = now('Asia/Jakarta')->addDay();
+        $this->post(route('meetings.store'), [
+            'title' => 'Rapat perdana',
+            'start_time' => $start->format('Y-m-d\TH:i'),
+            'end_time' => $start->copy()->addHour()->format('Y-m-d\TH:i'),
+            'timezone' => 'Asia/Jakarta',
+            'mode' => 'offline',
+        ])->assertRedirectToRoute('meetings.show', Meeting::where('user_id', $user->id)->sole());
+    }
 
     public function test_organizer_signs_in_creates_a_meeting_reorders_agenda_and_completes_it(): void
     {

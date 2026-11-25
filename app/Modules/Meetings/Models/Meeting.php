@@ -46,6 +46,7 @@ class Meeting extends Model
             'start_time' => 'immutable_datetime',
             'end_time' => 'immutable_datetime',
             'schedule_version' => 'integer',
+            'schedule_version_at' => 'immutable_datetime',
         ];
     }
 

@@ -1,6 +1,6 @@
 @props(['id', 'label', 'name', 'error' => null])
 
-<div>
+<div class="min-w-0">
     <label class="field-label" for="{{ $id }}">{{ $label }}</label>
     <select
         id="{{ $id }}"

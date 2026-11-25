@@ -71,10 +71,9 @@ class MeetingParticipationTest extends TestCase
         $active = ActionItem::factory()->for($meeting)->for($member, 'assignee')->create();
         $completed = ActionItem::factory()->for($meeting)->for($member, 'assignee')->create(['status' => 'completed']);
 
-        $this->actingAs($organizer)->post($baseUrl.'/participants', ['email' => 'missing@example.test'])
-            ->assertSessionHasErrors('email');
-        $this->post($baseUrl.'/participants', ['email' => 'PESERTA@EXAMPLE.TEST'])->assertRedirect($baseUrl);
-        $this->post($baseUrl.'/participants', ['email' => $member->email])->assertSessionHasErrors('email');
+        // Keanggotaan lama dari Fase 1 tetap dapat dikelola.
+        $meeting->participants()->attach($member);
+        $this->actingAs($organizer);
         $this->assertDatabaseCount('meeting_participants', 1);
 
         $this->delete($baseUrl.'/participants/'.$member->id)->assertSessionHasErrors('confirmed');

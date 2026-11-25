@@ -13,7 +13,7 @@
 <li class="grid gap-3 py-5 first:pt-0 last:pb-0" id="{{ $id }}">
     <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
         <x-status-badge :variant="$statusVariant">{{ $statusLabel }}</x-status-badge>
-        <p class="text-sm text-muted">
+        <p class="text-sm text-muted tabular-nums">
             @if ($item->deadline)
                 Tenggat <time datetime="{{ $item->deadline->toDateString() }}">{{ $item->deadline->locale('id')->translatedFormat('d M Y') }}</time>
             @else
@@ -22,14 +22,14 @@
         </p>
     </div>
     @if ($showMeeting ?? false)
-        <h2 class="wrap-anywhere font-semibold">{{ $item->description }}</h2>
-        <p><a class="text-sm font-semibold text-terracotta underline-offset-4 hover:underline" href="{{ route('meetings.show', $meeting) }}">{{ $meeting->title }}</a></p>
+        <h2 class="wrap-anywhere text-lg font-semibold">{{ $item->description }}</h2>
+        <p><a class="wrap-anywhere text-sm font-semibold text-terracotta underline-offset-4 hover:underline" href="{{ route('meetings.show', $meeting) }}">{{ $meeting->title }}</a></p>
     @else
         <h3 class="wrap-anywhere font-semibold">{{ $item->description }}</h3>
     @endif
     <p class="wrap-anywhere text-sm text-muted">{{ $item->assignee->name ?? 'Belum ditugaskan' }}</p>
 
-    <form method="POST" action="{{ route('meetings.action-items.update', [$meeting, $item]) }}" class="flex flex-wrap items-end gap-3">
+    <form method="POST" action="{{ route('meetings.action-items.update', [$meeting, $item]) }}" class="flex flex-wrap items-end gap-3 rounded-xl border border-line bg-cream/35 p-3">
         @csrf
         @method('PATCH')
         <input type="hidden" name="_tugas" value="{{ $item->id }}">

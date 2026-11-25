@@ -10,11 +10,11 @@
 
     <header class="workspace-heading">
         <a class="back-link" href="{{ route('meetings.index') }}">← Meeting</a>
-        <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <h1 class="page-title wrap-anywhere">{{ $meeting->title }}</h1>
+        <div class="grid justify-items-start gap-3">
             <x-meeting-status :status="$meeting->status" />
+            <h1 class="page-title wrap-anywhere">{{ $meeting->title }}</h1>
         </div>
-        <p class="mt-3 text-muted">
+        <p class="mt-3 wrap-anywhere text-muted tabular-nums">
             <time datetime="{{ $start->toIso8601String() }}">{{ $start->locale('id')->translatedFormat('d M Y, H.i') }}</time>
             <span aria-hidden="true">–</span><span class="sr-only"> sampai </span>
             <time datetime="{{ $end->toIso8601String() }}">{{ $end->locale('id')->translatedFormat($start->isSameDay($end) ? 'H.i' : 'd M Y, H.i') }}</time>
@@ -51,7 +51,12 @@
     <div class="grid items-start gap-5 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <div class="grid min-w-0 gap-5">
             <x-card aria-labelledby="detail-heading">
-                <h2 id="detail-heading" class="section-title">Detail</h2>
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <h2 id="detail-heading" class="section-title">Detail</h2>
+                    @if ($isOrganizer && $meeting->mode === 'offline')
+                        <a class="button button--secondary" href="{{ route('attendance.summary', $meeting) }}">Rekap kehadiran</a>
+                    @endif
+                </div>
                 <dl class="mt-4 grid gap-x-5 gap-y-3 sm:grid-cols-2">
                     <div>
                         <dt class="field-label mb-1">Organizer</dt>
@@ -92,7 +97,7 @@
                     @forelse ($actionItems as $item)
                         @include('action-items.row', ['participants' => $isOrganizer ? $meeting->participants : null])
                     @empty
-                        <li class="text-muted">Belum ada tugas.</li>
+                        <li class="empty-state">Belum ada tugas.</li>
                     @endforelse
                 </ul>
             </x-card>

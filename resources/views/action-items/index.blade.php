@@ -13,7 +13,7 @@
             @forelse ($actionItems as $item)
                 @include('action-items.row', ['meeting' => $item->meeting, 'showMeeting' => true])
             @empty
-                <li class="text-muted">Belum ada tugas di halaman ini.</li>
+                <li class="empty-state">Belum ada tugas di halaman ini.</li>
             @endforelse
         </ul>
 

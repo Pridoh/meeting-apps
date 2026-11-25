@@ -8,4 +8,4 @@
     };
 @endphp
 
-<x-status-badge :variant="$variant">{{ $label }}</x-status-badge>
+<x-status-badge :variant="$variant" {{ $attributes }}>{{ $label }}</x-status-badge>

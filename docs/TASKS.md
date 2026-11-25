@@ -29,3 +29,14 @@ Setiap baris menunggu persetujuan fase tersendiri. Urutan migrasi usulan mengiku
 - [x] AC-14, AC-15: review tersimpan, transaksi finalisasi idempoten, assignee anggota meeting, progres tugas terpisah dari notulen final.
 - [x] Regresi SQLite/MySQL, alur browser Organizer dan Participant, review keamanan, materi belajar.
 - [x] Mahasiswa mengonfirmasi uji manual Fase 1 lulus dan menyetujui Fase 2.
+
+## Fase 2 — undangan
+
+- [x] AC-02–04, migrasi kompatibel anggota lama, queue SMTP, pendaftaran/verifikasi, scheduler kedaluwarsa dan uji kotak surat lokal.
+- [x] Mahasiswa mengonfirmasi uji manual Fase 2 lulus dan menyetujui Fase 3. Tag checkpoint Fase 2 masih terbuka.
+
+## Fase 3 — kehadiran dan rekap H-1
+
+- [x] AC-05–08, migrasi, scheduler, UI peserta dan rekap Organizer.
+- [x] Regresi SQLite dan MySQL, dua pilihan MySQL konkuren, browser responsif, dan panduan belajar.
+- [x] Mahasiswa menyelesaikan uji manual Fase 3 dan menyetujui Fase 4.
