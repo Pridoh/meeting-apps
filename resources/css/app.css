@@ -1,9 +1,15 @@
 @import 'tailwindcss';
+@import './theme.css';
+@import './pages/landing.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
 @theme {
+    --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+    --font-accent: 'Newsreader', Georgia, serif;
+    --font-ui: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-label: 'IBM Plex Mono', ui-monospace, monospace;
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }

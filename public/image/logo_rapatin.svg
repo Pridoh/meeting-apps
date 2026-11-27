@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <!-- Gradasi halus mengikuti pencahayaan gambar referensi -->
+    <linearGradient id="navyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3C426B" />
+      <stop offset="100%" stop-color="#454B78" />
+    </linearGradient>
+
+    <linearGradient id="periwinkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9CA9DC" />
+      <stop offset="100%" stop-color="#B0BCE6" />
+    </linearGradient>
+
+    <linearGradient id="lavenderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E4DFFA" />
+      <stop offset="100%" stop-color="#CFC6F4" />
+    </linearGradient>
+
+    <linearGradient id="lightLavenderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F6F1FF" />
+      <stop offset="100%" stop-color="#ECE5FD" />
+    </linearGradient>
+  </defs>
+
+  <!-- 1. Lapisan Dasar (Lavender Terang di sisi kanan) -->
+  <!-- <rect width="1200" height="800" fill="url(#lightLavenderGrad)" /> -->
+
+  <!-- 2. Lapisan Kurva Lavender Tengah -->
+  <!-- <path d="M 0,0 L 1140,0 C 970,220 970,560 1070,800 L 0,800 Z" fill="url(#lavenderGrad)" /> -->
+
+  <!-- 3. Lapisan Kurva Biru Keunguan (Periwinkle) -->
+  <!-- <path d="M 0,0 L 970,0 C 700,230 680,530 600,800 L 0,800 Z" fill="url(#periwinkleGrad)" /> -->
+
+  <!-- 4. Lapisan Kurva Navy Gelap di sisi kiri -->
+  <!-- <path d="M 0,0 L 695,0 C 510,270 660,670 115,800 L 0,800 Z" fill="url(#navyGrad)" /> -->
+
+  <!-- 5. Ikon Logo Utama Huruf "R" (2 Elemen Terpisah Sesuai Gambar) -->
+  <g id="logo-icon" fill="#713F35">
+    <!-- Bagian Atas (Batang horizontal melengkung ke bawah di sisi kanan) -->
+    <path d="M 446,248 
+             L 616,248 
+             C 695,248 744,297 744,376 
+             L 744,444 
+             L 669,444 
+             L 669,378 
+             C 669,340 648,323 610,323 
+             L 446,323 
+             Z" />
+
+    <!-- Bagian Bawah (Lengkungan kiri naik lalu miring diagonal ke kanan bawah) -->
+    <path d="M 446,554 
+             L 446,435 
+             C 446,386 481,357 526,357 
+             C 552,357 575,367 596,388 
+             L 745,554 
+             L 655,554 
+             L 538,438 
+             C 533,433 529,432 526,432 
+             C 523,432 521,435 521,441 
+             L 521,554 
+             Z" />
+  </g>
+</svg>

@@ -1,0 +1,38 @@
+@layer theme {
+    :root {
+        --theme-canvas: light-dark(#fcf9f5, #211816);
+        --theme-surface: light-dark(#fffdfb, #30221f);
+        --theme-panel: light-dark(#fff, #362723);
+        --theme-subtle: light-dark(#fdf6ef, #3e2d28);
+        --theme-tint: light-dark(#f4e8dc, #4c352e);
+        --theme-text: light-dark(#2b1b17, #faece4);
+        --theme-muted: light-dark(#8a6f66, #d4b6aa);
+        --theme-border: light-dark(#e6d6c8, #61473d);
+        --theme-accent: light-dark(#713f35, #f2ae94);
+        --theme-accent-hover: light-dark(#572e26, #ffc5ae);
+        --theme-on-accent: light-dark(#fff9f4, #321c16);
+    }
+
+    :root[data-theme="light"] { color-scheme: light; }
+    :root[data-theme="dark"] { color-scheme: dark; }
+}
+
+@layer components {
+    .theme-toggle {
+        display: grid;
+        flex: none;
+        width: 44px;
+        height: 44px;
+        place-items: center;
+        border: 1px solid var(--theme-border);
+        border-radius: 50%;
+        background: var(--theme-subtle);
+        color: var(--theme-accent);
+        cursor: pointer;
+    }
+
+    .theme-toggle:hover { background: var(--theme-tint); }
+    .theme-toggle:focus-visible { outline: 2px solid var(--theme-accent); outline-offset: 2px; }
+    .theme-toggle-sun, [data-theme="dark"] .theme-toggle-moon { display: none; }
+    [data-theme="dark"] .theme-toggle-sun { display: block; }
+}
