@@ -8,6 +8,10 @@
         <a href="#fitur">Fitur</a>
         <a href="#alur">Alur rapat</a>
         <a href="#ruang">Ruang</a>
+        <div class="hero-nav-auth">
+            <a href="{{ route('login') }}">Masuk</a>
+            <a class="hero-nav-register" href="{{ route('register') }}">Daftar</a>
+        </div>
     </nav>
     <x-theme-toggle />
 </header>
